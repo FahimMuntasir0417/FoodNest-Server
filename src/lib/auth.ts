@@ -13,19 +13,11 @@ export const auth = betterAuth({
     provider: "postgresql", // mysql | postgresql | sqlite
   }),
 
-  // ✅ Email + Password
-  emailAndPassword: {
-    enabled: true,
-
-    // ⚠️ Key name can vary across Better Auth versions
-    // If TS complains, send: npm ls better-auth
-    requireEmailVerification: true,
-  },
   user: {
     additionalFields: {
       role: {
         type: "string",
-        defaultValue: "USER",
+        defaultValue: "CUSTOMER",
         required: false,
       },
       phone: {
@@ -38,6 +30,15 @@ export const auth = betterAuth({
         required: false,
       },
     },
+  },
+
+  // ✅ Email + Password
+  emailAndPassword: {
+    enabled: true,
+
+    // ⚠️ Key name can vary across Better Auth versions
+    // If TS complains, send: npm ls better-auth
+    requireEmailVerification: true,
   },
 
   // ✅ Google OAuth
