@@ -5,6 +5,7 @@ import { auth } from "./lib/auth";
 import { useRouter } from "./modules/user/user.router";
 import { categoriesRouter } from "./modules/categories/categories.routes";
 import { mealsRouter } from "./modules/meals/meals.routes";
+import { reviewsRouter } from "./modules/reviews/reviews.routes";
 
 const app: Application = express();
 
@@ -25,6 +26,8 @@ app.use("/users", useRouter);
 app.use("/api/categories", categoriesRouter);
 
 app.use("/api/meals", mealsRouter);
+
+app.use("/reviews", reviewsRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
