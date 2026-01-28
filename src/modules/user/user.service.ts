@@ -6,9 +6,15 @@ const listUser = async () => {
   });
 };
 
-const getUserByid = async () => {};
+const getUserByid = async (id: string) => {
+  return prisma.user.findUnique({
+    where: { id },
+  });
+};
 
-const updateUser = async () => {};
+const updateUser = async () => {
+  // keep empty
+};
 
 export const UserServices = {
   listUser,
