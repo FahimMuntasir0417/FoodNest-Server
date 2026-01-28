@@ -4,6 +4,7 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth";
 import { useRouter } from "./modules/user/user.router";
 import { categoriesRouter } from "./modules/categories/categories.routes";
+import { mealsRouter } from "./modules/meals/meals.routes";
 
 const app: Application = express();
 
@@ -22,6 +23,8 @@ app.use("/users", useRouter);
 
 //  categories router
 app.use("/api/categories", categoriesRouter);
+
+app.use("/api/meals", mealsRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

@@ -1,4 +1,4 @@
-import { prisma } from "../../lib/prisma"; // adjust path
+import { prisma } from "../../lib/prisma";
 
 type CreateReviewInput = {
   mealId: string;
