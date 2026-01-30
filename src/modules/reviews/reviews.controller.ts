@@ -49,8 +49,6 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 
     res.status(201).json(created);
   } catch (err: any) {
-    // unique constraint violation -> already reviewed
-    // Prisma typically throws code P2002 for unique constraint
     if (err?.code === "P2002") {
       return res
         .status(409)
@@ -74,7 +72,6 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
       return res.status(403).json({ message: "Forbidden" });
     }
 
-    // (optional) keep same rating rule on update if provided
     if (typeof rating === "number" && (rating < 1 || rating > 5)) {
       return res
         .status(400)

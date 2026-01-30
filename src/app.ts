@@ -6,6 +6,9 @@ import { useRouter } from "./modules/user/user.router";
 import { categoriesRouter } from "./modules/categories/categories.routes";
 import { mealsRouter } from "./modules/meals/meals.routes";
 import { reviewsRouter } from "./modules/reviews/reviews.routes";
+import { providersRouter } from "./modules/providers/providers.route";
+import { orderItemsRouter } from "./modules/order-items/orderItems.routes";
+import { ordersRouter } from "./modules/orders/orders.routes";
 
 const app: Application = express();
 
@@ -20,14 +23,20 @@ app.use(
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 // user router
-app.use("/users", useRouter);
+app.use("/api/v1/users", useRouter);
 
 //  categories router
-app.use("/api/categories", categoriesRouter);
+app.use("/api/v1/categories", categoriesRouter);
 
-app.use("/api/meals", mealsRouter);
+app.use("/api/v1/meals", mealsRouter);
 
-app.use("/reviews", reviewsRouter);
+app.use("/api/v1/reviews", reviewsRouter);
+
+app.use("/api/v1/providers", providersRouter);
+
+app.use("/api/v1/order-items", orderItemsRouter);
+
+app.use("/api/v1/orders", ordersRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

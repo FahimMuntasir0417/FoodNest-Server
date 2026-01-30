@@ -1,4 +1,4 @@
-import { prisma } from "../../lib/prisma"; // adjust path if needed
+import { prisma } from "../../lib/prisma";
 
 type ListMealsInput = {
   providerId?: string;

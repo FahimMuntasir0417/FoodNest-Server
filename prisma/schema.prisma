@@ -55,6 +55,7 @@ model User {
    providerProfile ProviderProfile?
   orders          Order[]
   reviews         Review[]
+    orderItems      OrderItem[]
 
   @@unique([email])
   @@map("user")
@@ -145,7 +146,7 @@ model Meal {
   categoryId  String?
   title       String
   description String?
-  price       Int      // store in smallest unit (BDT)
+  price       Int      
   imageUrl    String?
   cuisine     String?
   isAvailable Boolean  @default(true)
@@ -189,20 +190,66 @@ model Order {
 }
 
 model OrderItem {
-  id        String @id @default(cuid())
-  orderId   String
-  mealId    String
-  quantity  Int    @default(1)
-  unitPrice Int
-  lineTotal Int
+  id         String  @id @default(cuid())
+  orderId    String?           // ✅ draft হলে null
+  customerId String            // ✅ draft owner
+  mealId     String
+  quantity   Int     @default(1)
+  unitPrice  Int
+  lineTotal  Int
 
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  meal  Meal  @relation(fields: [mealId], references: [id], onDelete: Restrict)
+  order    Order? @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  customer User  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  meal     Meal  @relation(fields: [mealId], references: [id], onDelete: Restrict)
 
   @@index([orderId])
+  @@index([customerId])
   @@index([mealId])
   @@map("order_item")
 }
+
+
+
+
+// model Order {
+//   id              String      @id @default(cuid())
+//   customerId      String
+//   status          OrderStatus @default(PLACED)
+
+//   deliveryAddress String
+//   phone           String?
+//   note            String?
+
+//   subTotal        Int
+//   deliveryFee     Int @default(0)
+//   total           Int
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   customer User        @relation(fields: [customerId], references: [id], onDelete: Cascade)
+//   items    OrderItem[]
+
+//   @@index([customerId])
+//   @@index([status])
+//   @@map("order")
+// }
+
+// model OrderItem {
+//   id        String @id @default(cuid())
+//   // orderId   String
+//   mealId    String
+//   quantity  Int    @default(1)
+//   unitPrice Int
+//   lineTotal Int
+
+//   // order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+//   meal  Meal  @relation(fields: [mealId], references: [id], onDelete: Restrict)
+
+//   // @@index([orderId])
+//   @@index([mealId])
+//   @@map("order_item")
+// }
 
 model Review {
   id         String   @id @default(cuid())
