@@ -4,13 +4,22 @@ import { ProvidersController } from "./providers.controller";
 
 const router = Router();
 
+// ✅ Provider orders MUST come before "/:id"
+router.get("/orders", auth(UserRole.PROVIDER), ProvidersController.getOrders);
+
+router.patch(
+  "/orders/:id",
+  auth(UserRole.PROVIDER),
+  ProvidersController.updateOrderStatus,
+);
+
 // Public: list providers
 router.get("/", ProvidersController.list);
 
 // Public: provider details (with meals)
 router.get("/:id", ProvidersController.details);
 
-// Provider/Admin: create my provider profile
+// Provider/Admin/Customer: create my provider profile
 router.post(
   "/",
   auth(UserRole.PROVIDER, UserRole.ADMIN, UserRole.CUSTOMER),

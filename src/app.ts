@@ -34,7 +34,16 @@ app.use("/api/v1/meals", mealsRouter);
 
 app.use("/api/v1/reviews", reviewsRouter);
 
-app.use("/api/v1/providers", providersRouter);
+// app.use("/api/v1/providers", providersRouter);
+
+app.use(
+  "/api/v1/providers",
+  (req, _res, next) => {
+    console.log("✅ HIT /api/v1/providers:", req.method, req.originalUrl);
+    next();
+  },
+  providersRouter,
+);
 
 app.use("/api/v1/order-items", orderItemsRouter);
 

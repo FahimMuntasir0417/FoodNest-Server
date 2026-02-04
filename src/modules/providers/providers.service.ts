@@ -1,3 +1,4 @@
+import { OrderStatus } from "../../../generated/prisma";
 import { prisma } from "../../lib/prisma";
 
 type CreateProviderInput = {
@@ -49,6 +50,81 @@ const getByUserId = async (userId: string) => {
   });
 };
 
+const getProviderOrders = async (userId: string) => {
+  // 1) providerId from ProviderProfile
+  const provider = await prisma.providerProfile.findUnique({
+    where: { userId },
+    select: { id: true },
+  });
+
+  if (!provider) return []; // provider profile missing
+
+  // 2) orders that contain this provider's meals
+  return prisma.order.findMany({
+    where: {
+      items: {
+        some: {
+          meal: { providerId: provider.id },
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+    include: {
+      customer: { select: { id: true, name: true, phone: true } },
+      items: {
+        include: {
+          meal: {
+            select: { id: true, title: true, price: true, providerId: true },
+          },
+        },
+      },
+    },
+  });
+};
+
+const updateOrderStatus = async (
+  userId: string,
+  orderId: string,
+  status: OrderStatus,
+) => {
+  const provider = await prisma.providerProfile.findUnique({
+    where: { userId },
+    select: { id: true },
+  });
+
+  if (!provider) return null;
+
+  // ensure this order has at least one item from this provider
+  const allowed = await prisma.order.findFirst({
+    where: {
+      id: orderId,
+      items: {
+        some: {
+          meal: { providerId: provider.id },
+        },
+      },
+    },
+    select: { id: true },
+  });
+
+  if (!allowed) return null;
+
+  return prisma.order.update({
+    where: { id: orderId },
+    data: { status },
+    include: {
+      customer: { select: { id: true, name: true, phone: true } },
+      items: {
+        include: {
+          meal: {
+            select: { id: true, title: true, price: true, providerId: true },
+          },
+        },
+      },
+    },
+  });
+};
+
 const create = async (data: CreateProviderInput) => {
   return prisma.providerProfile.create({ data });
 };
@@ -66,4 +142,6 @@ export const ProvidersService = {
   getByUserId,
   create,
   updateByUserId,
+  getProviderOrders,
+  updateOrderStatus,
 };

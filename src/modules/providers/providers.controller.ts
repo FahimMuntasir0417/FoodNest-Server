@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ProvidersService } from "./providers.service";
+import { OrderStatus } from "../../../generated/prisma";
 
 type ProviderBody = {
   shopName?: string;
@@ -13,6 +14,58 @@ const list = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const providers = await ProvidersService.list();
     res.json(providers);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getOrders = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    if (!req.user?.id) return res.status(401).json({ message: "Unauthorized" });
+
+    const orders = await ProvidersService.getProviderOrders(req.user.id);
+    return res.json(orders);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateOrderStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    if (!req.user?.id) return res.status(401).json({ message: "Unauthorized" });
+
+    const idRaw = req.params.id as unknown;
+    if (typeof idRaw !== "string" || !idRaw.trim()) {
+      return res.status(400).json({ message: "Invalid order id" });
+    }
+    const orderId = idRaw;
+
+    const { status } = req.body as { status?: OrderStatus };
+    if (!status) return res.status(400).json({ message: "status is required" });
+
+    if (!Object.values(OrderStatus).includes(status)) {
+      return res.status(400).json({
+        message: `Invalid status. Allowed: ${Object.values(OrderStatus).join(", ")}`,
+      });
+    }
+
+    const updated = await ProvidersService.updateOrderStatus(
+      req.user.id,
+      orderId,
+      status,
+    );
+
+    if (!updated) {
+      return res.status(404).json({
+        message: "Order not found or you don't have access to this order",
+      });
+    }
+
+    return res.json(updated);
   } catch (err) {
     next(err);
   }
@@ -90,4 +143,6 @@ export const ProvidersController = {
   details,
   createMe,
   updateMe,
+  getOrders,
+  updateOrderStatus,
 };
