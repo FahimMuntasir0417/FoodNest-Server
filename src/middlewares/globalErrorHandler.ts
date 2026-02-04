@@ -9,13 +9,14 @@ function errorHandler(
 ) {
   let statusCode = 500;
   let errorMessage = "Internal Server Error";
-  const errorDetails = err;
 
-  // Prisma transaction busy / timeout (your current issue)
-  if (
-    err instanceof Error &&
-    err.message?.includes("Unable to start a transaction")
-  ) {
+  const isDev = process.env.NODE_ENV !== "production";
+
+  // Narrow unknown -> Error (if possible)
+  const isError = err instanceof Error;
+
+  // Prisma transaction busy / timeout
+  if (isError && err.message.includes("Unable to start a transaction")) {
     statusCode = 503;
     errorMessage = "Database is busy. Please try again.";
   }
@@ -70,10 +71,25 @@ function errorHandler(
     }
   }
 
-  res.status(statusCode).json({
-    message: errorMessage,
-    error: errorDetails,
-  });
+  const payload: Record<string, unknown> = { message: errorMessage };
+
+  if (isDev) {
+    payload.debug = {
+      name: isError ? err.name : undefined,
+      message: isError ? err.message : undefined,
+      stack: isError ? err.stack : undefined,
+      code:
+        err instanceof Prisma.PrismaClientKnownRequestError
+          ? err.code
+          : undefined,
+      meta:
+        err instanceof Prisma.PrismaClientKnownRequestError
+          ? err.meta
+          : undefined,
+    };
+  }
+
+  res.status(statusCode).json(payload);
 }
 
 export default errorHandler;
