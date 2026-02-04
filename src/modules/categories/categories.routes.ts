@@ -10,7 +10,7 @@ router.get("/", CategoriesController.list);
 
 // Admin: create category
 // /api/categories
-router.post("/", auth(UserRole.CUSTOMER), CategoriesController.create);
+router.post("/", auth(UserRole.PROVIDER), CategoriesController.create);
 
 // Admin:  category by id
 // /api/categories/id

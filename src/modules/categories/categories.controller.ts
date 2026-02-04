@@ -11,6 +11,8 @@ type UpdateCategoryBody = {
   slug?: string;
 };
 
+type UpdateCategoryInput = { name?: string; slug?: string };
+
 const list = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const categories = await CategoriesService.list();
@@ -50,12 +52,31 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+// const update = async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     const { id } = req.params;
+//     const { name, slug } = req.body as UpdateCategoryBody;
+
+//     const updated = await CategoriesService.update(id as string, { name, slug });
+//     res.json(updated);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
 const update = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    if (!id) return res.status(400).json({ message: "id param is required" });
+
     const { name, slug } = req.body as UpdateCategoryBody;
 
-    const updated = await CategoriesService.update(id, { name, slug });
+    const input: UpdateCategoryInput = {
+      ...(name !== undefined ? { name } : {}),
+      ...(slug !== undefined ? { slug } : {}),
+    };
+
+    const updated = await CategoriesService.update(id as string, input);
     res.json(updated);
   } catch (err) {
     next(err);
