@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { UserServices } from "./user.service";
+import { Role } from "../../../generated/prisma";
 
 const userList = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -40,14 +41,59 @@ const getUserByid = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const updateUser = async (req: Request, res: Response, next: NextFunction) => {
-  // keep empty
-  res.status(501).json({ message: "Not implemented" });
+// ✅ NEW: update role
+const updateUserRole = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const idRaw = req.params.id as unknown; // handle weird typing
+
+    if (typeof idRaw !== "string" || !idRaw.trim()) {
+      return res.status(400).json({ message: "Invalid user id" });
+    }
+    const id = idRaw;
+
+    const { role } = req.body as { role?: Role };
+    if (!role) return res.status(400).json({ message: "role is required" });
+
+    if (!Object.values(Role).includes(role)) {
+      return res.status(400).json({
+        message: `Invalid role. Allowed: ${Object.values(Role).join(", ")}`,
+      });
+    }
+
+    const updated = await UserServices.updateUserRole(id, role);
+
+    if (!updated) return res.status(404).json({ message: "User not found" });
+
+    return res.json(updated);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await UserServices.deleteUser(id as string);
+
+    if (!deleted) return res.status(404).json({ message: "User not found" });
+
+    // either return deleted object OR a simple message
+    return res.json({ message: "User deleted", user: deleted });
+    // or: return res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const UserController = {
   userList,
   getUserByid,
-  updateUser,
+  updateUserRole,
   getUserAdminByid,
+  deleteUser,
 };

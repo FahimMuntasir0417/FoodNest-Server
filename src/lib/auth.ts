@@ -59,7 +59,7 @@ export const auth = betterAuth({
         html: `
           <h2>Verify your email</h2>
           <p>Click the link below to verify your account:</p>
-          <a href="${url}">${url}</a>
+          <a href="http://localhost:3000/">${url}</a>
         `,
       });
     },

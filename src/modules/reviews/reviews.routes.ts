@@ -4,6 +4,13 @@ import { ReviewsController } from "./reviews.controller";
 
 const router = Router();
 
+// Admin: list all reviews
+router.get(
+  "/",
+
+  ReviewsController.listAll,
+);
+
 // Public: list reviews for a meal
 router.get("/meal/:mealId", ReviewsController.listByMeal);
 

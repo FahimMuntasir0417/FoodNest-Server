@@ -29,6 +29,12 @@ const auth = (...roles: UserRole[]) => {
         headers: req.headers as any,
       });
 
+      console.log("AUTH CHECK:", {
+        ok: !!session,
+        role: session?.user?.role,
+        emailVerified: session?.user?.emailVerified,
+      });
+
       if (!session) {
         return res.status(401).json({
           success: false,

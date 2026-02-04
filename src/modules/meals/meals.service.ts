@@ -5,6 +5,8 @@ type ListMealsInput = {
   categoryId?: string;
   cuisine?: string;
   available?: string; // "true" | "false"
+  page?: number;
+  limit?: number;
 };
 
 type CreateMealInput = {
@@ -31,21 +33,48 @@ type UpdateMealInput = {
 const list = async (filters: ListMealsInput) => {
   const { providerId, categoryId, cuisine, available } = filters;
 
-  return prisma.meal.findMany({
-    where: {
-      providerId: providerId || undefined,
-      categoryId: categoryId || undefined,
-      cuisine: cuisine || undefined,
-      isAvailable:
-        typeof available === "string" ? available === "true" : undefined,
+  const page = Math.max(1, Number(filters.page ?? 1));
+  const limit = Math.min(100, Math.max(1, Number(filters.limit ?? 10)));
+  const skip = (page - 1) * limit;
+
+  const isAvailable =
+    typeof available === "string" ? available === "true" : undefined;
+
+  // ✅ args type can be undefined, so we use NonNullable
+  type FindManyArgs = NonNullable<Parameters<typeof prisma.meal.findMany>[0]>;
+  type WhereType = FindManyArgs["where"];
+
+  const where: WhereType = {
+    ...(providerId ? { providerId } : {}),
+    ...(categoryId ? { categoryId } : {}),
+    ...(cuisine ? { cuisine } : {}),
+    ...(typeof isAvailable === "boolean" ? { isAvailable } : {}),
+  };
+
+  const [items, total] = await Promise.all([
+    prisma.meal.findMany({
+      where,
+      include: { provider: true, category: true, reviews: true },
+      orderBy: { createdAt: "desc" },
+      skip,
+      take: limit,
+    }),
+    prisma.meal.count({ where }),
+  ]);
+
+  const totalPages = Math.ceil(total / limit);
+
+  return {
+    items,
+    meta: {
+      total,
+      page,
+      limit,
+      totalPages,
+      hasNext: page < totalPages,
+      hasPrev: page > 1,
     },
-    include: {
-      provider: true,
-      category: true,
-      reviews: true,
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  };
 };
 
 const details = async (id: string) => {

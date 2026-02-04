@@ -1,3 +1,4 @@
+import { Role } from "../../../generated/prisma";
 import { prisma } from "../../lib/prisma";
 
 const listUser = async () => {
@@ -12,12 +13,29 @@ const getUserByid = async (id: string) => {
   });
 };
 
-const updateUser = async () => {
-  // keep empty
+const updateUserRole = async (id: string, role: Role) => {
+  const existing = await prisma.user.findUnique({ where: { id } });
+  if (!existing) return null;
+
+  return prisma.user.update({
+    where: { id },
+    data: { role }, // ✅ correct
+  });
+};
+
+const deleteUser = async (id: string) => {
+  const existing = await prisma.user.findUnique({ where: { id } });
+  if (!existing) return null;
+
+  return prisma.user.delete({
+    where: { id },
+  });
 };
 
 export const UserServices = {
   listUser,
   getUserByid,
-  updateUser,
+  updateUserRole,
+
+  deleteUser,
 };

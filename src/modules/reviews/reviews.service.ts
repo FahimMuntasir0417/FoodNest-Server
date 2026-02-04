@@ -12,6 +12,12 @@ type UpdateReviewInput = {
   comment?: string;
 };
 
+const listAll = async () => {
+  return prisma.review.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+};
+
 const listByMeal = async (mealId: string) => {
   return prisma.review.findMany({
     where: { mealId },
@@ -49,4 +55,5 @@ export const ReviewsService = {
   create,
   update,
   remove,
+  listAll,
 };

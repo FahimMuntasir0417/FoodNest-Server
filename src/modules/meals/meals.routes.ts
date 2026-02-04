@@ -13,7 +13,7 @@ router.get("/:id", MealsController.details);
 // Provider/Admin: create meal
 router.post(
   "/",
-  auth(UserRole.PROVIDER, UserRole.ADMIN),
+  auth(UserRole.PROVIDER, UserRole.ADMIN, UserRole.CUSTOMER),
   MealsController.create,
 );
 
@@ -27,7 +27,7 @@ router.patch(
 // Provider/Admin: delete meal
 router.delete(
   "/:id",
-  auth(UserRole.PROVIDER, UserRole.ADMIN),
+  auth(UserRole.PROVIDER, UserRole.ADMIN, UserRole.CUSTOMER),
   MealsController.remove,
 );
 

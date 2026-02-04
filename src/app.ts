@@ -9,6 +9,8 @@ import { reviewsRouter } from "./modules/reviews/reviews.routes";
 import { providersRouter } from "./modules/providers/providers.route";
 import { orderItemsRouter } from "./modules/order-items/orderItems.routes";
 import { ordersRouter } from "./modules/orders/orders.routes";
+import { notFound } from "./middlewares/notFound";
+import errorHandler from "./middlewares/globalErrorHandler";
 
 const app: Application = express();
 
@@ -41,5 +43,8 @@ app.use("/api/v1/orders", ordersRouter);
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;

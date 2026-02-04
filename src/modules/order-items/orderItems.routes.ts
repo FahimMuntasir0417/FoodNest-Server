@@ -13,7 +13,7 @@ const router = Router();
 
 // My drafts (cart)
 router.get(
-  "/draft/me",
+  "/",
   auth(UserRole.CUSTOMER, UserRole.ADMIN),
   OrderItemsController.listMyDrafts,
 );

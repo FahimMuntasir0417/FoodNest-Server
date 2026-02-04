@@ -6,6 +6,8 @@ type ListMealsQuery = {
   categoryId?: string;
   cuisine?: string;
   available?: string;
+  page?: number; // parsed number
+  limit?: number;
 };
 
 type CreateMealBody = {
@@ -28,19 +30,24 @@ type UpdateMealBody = {
   isAvailable?: boolean;
 };
 
-const list = async (req: Request, res: Response, next: NextFunction) => {
+export const list = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { providerId, categoryId, cuisine, available } =
+    const { providerId, categoryId, cuisine, available, page, limit } =
       req.query as ListMealsQuery;
 
-    const meals = await MealsService.list({
+    const pageNum = Math.max(1, Number(page ?? 1));
+    const limitNum = Math.min(100, Math.max(1, Number(limit ?? 10)));
+
+    const result = await MealsService.list({
       providerId,
       categoryId,
       cuisine,
       available,
+      page: pageNum,
+      limit: limitNum,
     });
 
-    res.json(meals);
+    res.json(result);
   } catch (err) {
     next(err);
   }

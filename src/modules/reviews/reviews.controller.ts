@@ -12,6 +12,15 @@ type UpdateReviewBody = {
   comment?: string;
 };
 
+const listAll = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const reviews = await ReviewsService.listAll();
+    res.json(reviews);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const listByMeal = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { mealId } = req.params;
@@ -110,4 +119,5 @@ export const ReviewsController = {
   create,
   update,
   remove,
+  listAll,
 };

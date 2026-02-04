@@ -13,7 +13,7 @@ router.get("/:id", ProvidersController.details);
 // Provider/Admin: create my provider profile
 router.post(
   "/me",
-  auth(UserRole.PROVIDER, UserRole.ADMIN),
+  auth(UserRole.PROVIDER, UserRole.ADMIN, UserRole.CUSTOMER),
   ProvidersController.createMe,
 );
 

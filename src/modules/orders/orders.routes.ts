@@ -14,11 +14,7 @@ router.post(
   OrdersController.createOrderWithItems,
 );
 
-router.post(
-  "/from-drafts",
-  auth(UserRole.CUSTOMER, UserRole.ADMIN),
-  OrdersController.createFromDrafts,
-);
+router.post("/from-drafts", auth(), OrdersController.createFromDrafts);
 
 /**
  * READ
