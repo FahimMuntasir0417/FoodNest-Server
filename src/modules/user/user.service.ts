@@ -7,10 +7,25 @@ const listUser = async () => {
   });
 };
 
-const getUserByid = async (id: string) => {
-  return prisma.user.findUnique({
+// ✅ user + providerId
+const getUserWithProviderId = async (id: string) => {
+  const user = await prisma.user.findUnique({
     where: { id },
+    include: {
+      providerProfile: {
+        select: { id: true }, // providerId
+      },
+    },
   });
+
+  if (!user) return null;
+
+  // return user object with providerId merged
+  return {
+    ...user,
+    providerId: user.providerProfile?.id ?? null,
+    providerProfile: undefined, // optional: hide providerProfile object
+  };
 };
 
 const updateUserRole = async (id: string, role: Role) => {
@@ -19,7 +34,7 @@ const updateUserRole = async (id: string, role: Role) => {
 
   return prisma.user.update({
     where: { id },
-    data: { role }, // ✅ correct
+    data: { role },
   });
 };
 
@@ -34,8 +49,7 @@ const deleteUser = async (id: string) => {
 
 export const UserServices = {
   listUser,
-  getUserByid,
+  getUserWithProviderId, // ✅ new
   updateUserRole,
-
   deleteUser,
 };

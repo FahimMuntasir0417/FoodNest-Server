@@ -11,6 +11,7 @@ const userList = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+// ✅ ADMIN: get user by id (includes providerId)
 const getUserAdminByid = async (
   req: Request,
   res: Response,
@@ -18,7 +19,7 @@ const getUserAdminByid = async (
 ) => {
   try {
     const { id } = req.params;
-    const user = await UserServices.getUserByid(id as string);
+    const user = await UserServices.getUserWithProviderId(id as string);
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -28,11 +29,13 @@ const getUserAdminByid = async (
   }
 };
 
-const getUserByid = async (req: Request, res: Response, next: NextFunction) => {
+// ✅ ME: get current user (includes providerId)
+const getMe = async (req: Request, res: Response, next: NextFunction) => {
   try {
     if (!req.user?.id) return res.status(401).json({ message: "Unauthorized" });
 
-    const me = await UserServices.getUserByid(req.user.id);
+    const me = await UserServices.getUserWithProviderId(req.user.id);
+
     if (!me) return res.status(404).json({ message: "User not found" });
 
     res.json(me);
@@ -41,15 +44,14 @@ const getUserByid = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-// ✅ NEW: update role
+// ✅ update role
 const updateUserRole = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const idRaw = req.params.id as unknown; // handle weird typing
-
+    const idRaw = req.params.id as unknown;
     if (typeof idRaw !== "string" || !idRaw.trim()) {
       return res.status(400).json({ message: "Invalid user id" });
     }
@@ -82,9 +84,7 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 
     if (!deleted) return res.status(404).json({ message: "User not found" });
 
-    // either return deleted object OR a simple message
     return res.json({ message: "User deleted", user: deleted });
-    // or: return res.status(204).send();
   } catch (err) {
     next(err);
   }
@@ -92,8 +92,8 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 
 export const UserController = {
   userList,
-  getUserByid,
-  updateUserRole,
+  getMe, // ✅ new
   getUserAdminByid,
+  updateUserRole,
   deleteUser,
 };

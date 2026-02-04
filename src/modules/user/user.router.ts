@@ -5,22 +5,18 @@ import auth, { UserRole } from "../../middlewares/auth";
 const router = express.Router();
 
 // Admin: listUser
-router.get(
-  "/",
-  auth(UserRole.ADMIN, UserRole.CUSTOMER),
-  UserController.userList,
-);
+router.get("/", auth(UserRole.ADMIN), UserController.userList);
 
-// user me
-router.get("/me", auth(), UserController.getUserByid);
+// user me (✅ will include providerId now)
+router.get("/me", auth(), UserController.getMe);
 
-// get user by id (admin)
+// get user by id (admin) (✅ can include providerId now)
 router.get("/:id", auth(UserRole.ADMIN), UserController.getUserAdminByid);
 
-// ✅ Admin: update user status
+// Admin: update user role
 router.patch("/:id", auth(UserRole.ADMIN), UserController.updateUserRole);
 
-// ✅ Admin: delete user
+// Admin: delete user
 router.delete("/:id", auth(UserRole.ADMIN), UserController.deleteUser);
 
 export const useRouter: Router = router;
