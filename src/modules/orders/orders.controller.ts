@@ -26,6 +26,26 @@ type CreateFromDraftsBody = {
   deliveryFee?: number;
 };
 
+const listAllAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    if (!req.user?.id) return res.status(401).json({ message: "Unauthorized" });
+
+    // auth middleware will ensure ADMIN, but double-check is ok
+    if (req.user.role !== "ADMIN") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    const orders = await OrdersService.listAllAdmin();
+    res.json(orders);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const createOrderWithItems = async (
   req: Request,
   res: Response,
@@ -226,4 +246,5 @@ export const OrdersController = {
   cancel,
   remove,
   createFromDrafts,
+  listAllAdmin,
 };

@@ -5,7 +5,7 @@ import { MealsController } from "./meals.controller";
 const router = Router();
 
 // Public: list meals (filters)
-router.get("/", MealsController.list);
+router.get("/", auth(), MealsController.list);
 
 // Public: meal details
 router.get("/:id", MealsController.details);

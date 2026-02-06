@@ -25,6 +25,25 @@ type CreateFromDraftsInput = {
   deliveryFee?: number;
 };
 
+const listAllAdmin = async () => {
+  return prisma.order.findMany({
+    include: {
+      customer: true,
+      items: {
+        include: {
+          meal: {
+            include: {
+              provider: true,
+              category: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+};
+
 const createOrderWithItems = async (
   user: AuthedUser,
   data: CreateOrderInput,
@@ -294,4 +313,5 @@ export const OrdersService = {
   updateStatus,
   cancel,
   remove,
+  listAllAdmin,
 };

@@ -4,6 +4,8 @@ import { OrdersController } from "./orders.controller";
 
 const router = Router();
 
+router.get("/", auth(UserRole.ADMIN), OrdersController.listAllAdmin);
+
 /**
  * CREATE
  * Create order and attach draft items (itemIds)

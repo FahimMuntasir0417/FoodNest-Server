@@ -5,7 +5,11 @@ import { ProvidersController } from "./providers.controller";
 const router = Router();
 
 // ✅ Provider orders MUST come before "/:id"
-router.get("/orders", auth(UserRole.PROVIDER), ProvidersController.getOrders);
+router.get(
+  "/orders",
+  auth(UserRole.PROVIDER, UserRole.ADMIN),
+  ProvidersController.getOrders,
+);
 
 router.patch(
   "/orders/:id",
