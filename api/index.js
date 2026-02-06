@@ -13,6 +13,10 @@ var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require
 var __commonJS = (cb, mod) => function __require2() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -5648,57 +5652,57 @@ var require_prisma = __commonJS({
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var {
-      PrismaClientKnownRequestError: PrismaClientKnownRequestError2,
-      PrismaClientUnknownRequestError: PrismaClientUnknownRequestError2,
-      PrismaClientRustPanicError: PrismaClientRustPanicError2,
-      PrismaClientInitializationError: PrismaClientInitializationError2,
-      PrismaClientValidationError: PrismaClientValidationError2,
-      getPrismaClient: getPrismaClient2,
-      sqltag: sqltag2,
-      empty: empty2,
-      join: join2,
-      raw: raw2,
+      PrismaClientKnownRequestError: PrismaClientKnownRequestError4,
+      PrismaClientUnknownRequestError: PrismaClientUnknownRequestError4,
+      PrismaClientRustPanicError: PrismaClientRustPanicError4,
+      PrismaClientInitializationError: PrismaClientInitializationError4,
+      PrismaClientValidationError: PrismaClientValidationError4,
+      getPrismaClient: getPrismaClient3,
+      sqltag: sqltag3,
+      empty: empty4,
+      join: join4,
+      raw: raw4,
       skip: skip2,
-      Decimal: Decimal2,
+      Decimal: Decimal4,
       Debug: Debug2,
-      DbNull: DbNull2,
-      JsonNull: JsonNull2,
-      AnyNull: AnyNull2,
-      NullTypes: NullTypes2,
-      makeStrictEnum: makeStrictEnum2,
-      Extensions: Extensions2,
+      DbNull: DbNull4,
+      JsonNull: JsonNull4,
+      AnyNull: AnyNull4,
+      NullTypes: NullTypes4,
+      makeStrictEnum: makeStrictEnum3,
+      Extensions: Extensions3,
       warnOnce: warnOnce2,
       defineDmmfProperty: defineDmmfProperty2,
       Public: Public2,
       getRuntime: getRuntime2,
       createParam: createParam2
     } = require_client();
-    var Prisma2 = {};
-    exports.Prisma = Prisma2;
+    var Prisma = {};
+    exports.Prisma = Prisma;
     exports.$Enums = {};
-    Prisma2.prismaVersion = {
+    Prisma.prismaVersion = {
       client: "7.3.0",
       engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
     };
-    Prisma2.PrismaClientKnownRequestError = PrismaClientKnownRequestError2;
-    Prisma2.PrismaClientUnknownRequestError = PrismaClientUnknownRequestError2;
-    Prisma2.PrismaClientRustPanicError = PrismaClientRustPanicError2;
-    Prisma2.PrismaClientInitializationError = PrismaClientInitializationError2;
-    Prisma2.PrismaClientValidationError = PrismaClientValidationError2;
-    Prisma2.Decimal = Decimal2;
-    Prisma2.sql = sqltag2;
-    Prisma2.empty = empty2;
-    Prisma2.join = join2;
-    Prisma2.raw = raw2;
-    Prisma2.validator = Public2.validator;
-    Prisma2.getExtensionContext = Extensions2.getExtensionContext;
-    Prisma2.defineExtension = Extensions2.defineExtension;
-    Prisma2.DbNull = DbNull2;
-    Prisma2.JsonNull = JsonNull2;
-    Prisma2.AnyNull = AnyNull2;
-    Prisma2.NullTypes = NullTypes2;
-    var path = __require("path");
-    exports.Prisma.TransactionIsolationLevel = makeStrictEnum2({
+    Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError4;
+    Prisma.PrismaClientUnknownRequestError = PrismaClientUnknownRequestError4;
+    Prisma.PrismaClientRustPanicError = PrismaClientRustPanicError4;
+    Prisma.PrismaClientInitializationError = PrismaClientInitializationError4;
+    Prisma.PrismaClientValidationError = PrismaClientValidationError4;
+    Prisma.Decimal = Decimal4;
+    Prisma.sql = sqltag3;
+    Prisma.empty = empty4;
+    Prisma.join = join4;
+    Prisma.raw = raw4;
+    Prisma.validator = Public2.validator;
+    Prisma.getExtensionContext = Extensions3.getExtensionContext;
+    Prisma.defineExtension = Extensions3.defineExtension;
+    Prisma.DbNull = DbNull4;
+    Prisma.JsonNull = JsonNull4;
+    Prisma.AnyNull = AnyNull4;
+    Prisma.NullTypes = NullTypes4;
+    var path2 = __require("path");
+    exports.Prisma.TransactionIsolationLevel = makeStrictEnum3({
       ReadUncommitted: "ReadUncommitted",
       ReadCommitted: "ReadCommitted",
       RepeatableRead: "RepeatableRead",
@@ -5850,16 +5854,16 @@ var require_prisma = __commonJS({
       OrderItem: "OrderItem",
       Review: "Review"
     };
-    var config = {
+    var config2 = {
       "previewFeatures": [],
       "clientVersion": "7.3.0",
       "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
       "activeProvider": "postgresql",
       "inlineSchema": '// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = "prisma-client-js"\n  output   = "../generated/prisma"\n}\n\ndatasource db {\n  provider = "postgresql"\n}\n\n// ENUMS FOR FOODHUB\n\nenum Role {\n  CUSTOMER\n  ADMIN\n  PROVIDER\n}\n\nenum UserStatus {\n  ACTIVE\n  SUSPENDED\n}\n\nenum OrderStatus {\n  PLACED\n  PREPARING\n  READY\n  DELIVERED\n  CANCELLED\n}\n\nmodel User {\n  id            String   @id\n  name          String\n  email         String\n  emailVerified Boolean  @default(false)\n  image         String?\n  createdAt     DateTime @default(now())\n  updatedAt     DateTime @updatedAt\n\n  role   Role?       @default(CUSTOMER)\n  phone  String?\n  status UserStatus? @default(ACTIVE)\n\n  sessions Session[]\n  accounts Account[]\n\n  providerProfile ProviderProfile?\n  orders          Order[]\n  reviews         Review[]\n  orderItems      OrderItem[]\n\n  @@unique([email])\n  @@map("user")\n}\n\nmodel Session {\n  id        String   @id\n  expiresAt DateTime\n  token     String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  ipAddress String?\n  userAgent String?\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([token])\n  @@index([userId])\n  @@map("session")\n}\n\nmodel Account {\n  id                    String    @id\n  accountId             String\n  providerId            String\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String?\n  refreshToken          String?\n  idToken               String?\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String?\n  password              String?\n  createdAt             DateTime  @default(now())\n  updatedAt             DateTime  @updatedAt\n\n  @@index([userId])\n  @@map("account")\n}\n\nmodel Verification {\n  id         String   @id\n  identifier String\n  value      String\n  expiresAt  DateTime\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  @@index([identifier])\n  @@map("verification")\n}\n\n//  FOODHUB MODELS \n\nmodel ProviderProfile {\n  id          String   @id @default(cuid())\n  userId      String   @unique\n  shopName    String\n  description String?\n  address     String?\n  phone       String?\n  logoUrl     String?\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n  meals Meal[]\n\n  @@map("provider_profile")\n}\n\nmodel Category {\n  id        String   @id @default(cuid())\n  name      String   @unique\n  slug      String   @unique\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  meals Meal[]\n\n  @@map("category")\n}\n\nmodel Meal {\n  id          String   @id @default(cuid())\n  providerId  String\n  categoryId  String?\n  title       String\n  description String?\n  price       Int\n  imageUrl    String?\n  cuisine     String?\n  isAvailable Boolean  @default(true)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  provider ProviderProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)\n  category Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n\n  orderItems OrderItem[]\n  reviews    Review[]\n\n  @@index([providerId])\n  @@index([categoryId])\n  @@index([isAvailable])\n  @@map("meal")\n}\n\nmodel Order {\n  id         String      @id @default(cuid())\n  customerId String\n  status     OrderStatus @default(PLACED)\n\n  deliveryAddress String\n  phone           String?\n  note            String?\n\n  subTotal    Int\n  deliveryFee Int @default(0)\n  total       Int\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  customer User        @relation(fields: [customerId], references: [id], onDelete: Cascade)\n  items    OrderItem[]\n\n  @@index([customerId])\n  @@index([status])\n  @@map("order")\n}\n\nmodel OrderItem {\n  id         String  @id @default(cuid())\n  orderId    String? // \u2705 draft \u09B9\u09B2\u09C7 null\n  customerId String // \u2705 draft owner\n  mealId     String\n  quantity   Int     @default(1)\n  unitPrice  Int\n  lineTotal  Int\n\n  order    Order? @relation(fields: [orderId], references: [id], onDelete: Cascade)\n  customer User   @relation(fields: [customerId], references: [id], onDelete: Cascade)\n  meal     Meal   @relation(fields: [mealId], references: [id], onDelete: Restrict)\n\n  @@index([orderId])\n  @@index([customerId])\n  @@index([mealId])\n  @@map("order_item")\n}\n\n// model Order {\n//   id              String      @id @default(cuid())\n//   customerId      String\n//   status          OrderStatus @default(PLACED)\n\n//   deliveryAddress String\n//   phone           String?\n//   note            String?\n\n//   subTotal        Int\n//   deliveryFee     Int @default(0)\n//   total           Int\n\n//   createdAt DateTime @default(now())\n//   updatedAt DateTime @updatedAt\n\n//   customer User        @relation(fields: [customerId], references: [id], onDelete: Cascade)\n//   items    OrderItem[]\n\n//   @@index([customerId])\n//   @@index([status])\n//   @@map("order")\n// }\n\n// model OrderItem {\n//   id        String @id @default(cuid())\n//   // orderId   String\n//   mealId    String\n//   quantity  Int    @default(1)\n//   unitPrice Int\n//   lineTotal Int\n\n//   // order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)\n//   meal  Meal  @relation(fields: [mealId], references: [id], onDelete: Restrict)\n\n//   // @@index([orderId])\n//   @@index([mealId])\n//   @@map("order_item")\n// }\n\nmodel Review {\n  id         String   @id @default(cuid())\n  customerId String\n  mealId     String\n  rating     Int // 1..5\n  comment    String?\n  createdAt  DateTime @default(now())\n\n  customer User @relation(fields: [customerId], references: [id], onDelete: Cascade)\n  meal     Meal @relation(fields: [mealId], references: [id], onDelete: Cascade)\n\n  @@unique([customerId, mealId])\n  @@index([mealId])\n  @@map("review")\n}\n'
     };
-    config.runtimeDataModel = JSON.parse('{"models":{"User":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"name","kind":"scalar","type":"String"},{"name":"email","kind":"scalar","type":"String"},{"name":"emailVerified","kind":"scalar","type":"Boolean"},{"name":"image","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"role","kind":"enum","type":"Role"},{"name":"phone","kind":"scalar","type":"String"},{"name":"status","kind":"enum","type":"UserStatus"},{"name":"sessions","kind":"object","type":"Session","relationName":"SessionToUser"},{"name":"accounts","kind":"object","type":"Account","relationName":"AccountToUser"},{"name":"providerProfile","kind":"object","type":"ProviderProfile","relationName":"ProviderProfileToUser"},{"name":"orders","kind":"object","type":"Order","relationName":"OrderToUser"},{"name":"reviews","kind":"object","type":"Review","relationName":"ReviewToUser"},{"name":"orderItems","kind":"object","type":"OrderItem","relationName":"OrderItemToUser"}],"dbName":"user"},"Session":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"expiresAt","kind":"scalar","type":"DateTime"},{"name":"token","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"ipAddress","kind":"scalar","type":"String"},{"name":"userAgent","kind":"scalar","type":"String"},{"name":"userId","kind":"scalar","type":"String"},{"name":"user","kind":"object","type":"User","relationName":"SessionToUser"}],"dbName":"session"},"Account":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"accountId","kind":"scalar","type":"String"},{"name":"providerId","kind":"scalar","type":"String"},{"name":"userId","kind":"scalar","type":"String"},{"name":"user","kind":"object","type":"User","relationName":"AccountToUser"},{"name":"accessToken","kind":"scalar","type":"String"},{"name":"refreshToken","kind":"scalar","type":"String"},{"name":"idToken","kind":"scalar","type":"String"},{"name":"accessTokenExpiresAt","kind":"scalar","type":"DateTime"},{"name":"refreshTokenExpiresAt","kind":"scalar","type":"DateTime"},{"name":"scope","kind":"scalar","type":"String"},{"name":"password","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"}],"dbName":"account"},"Verification":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"identifier","kind":"scalar","type":"String"},{"name":"value","kind":"scalar","type":"String"},{"name":"expiresAt","kind":"scalar","type":"DateTime"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"}],"dbName":"verification"},"ProviderProfile":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"userId","kind":"scalar","type":"String"},{"name":"shopName","kind":"scalar","type":"String"},{"name":"description","kind":"scalar","type":"String"},{"name":"address","kind":"scalar","type":"String"},{"name":"phone","kind":"scalar","type":"String"},{"name":"logoUrl","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"user","kind":"object","type":"User","relationName":"ProviderProfileToUser"},{"name":"meals","kind":"object","type":"Meal","relationName":"MealToProviderProfile"}],"dbName":"provider_profile"},"Category":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"name","kind":"scalar","type":"String"},{"name":"slug","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"meals","kind":"object","type":"Meal","relationName":"CategoryToMeal"}],"dbName":"category"},"Meal":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"providerId","kind":"scalar","type":"String"},{"name":"categoryId","kind":"scalar","type":"String"},{"name":"title","kind":"scalar","type":"String"},{"name":"description","kind":"scalar","type":"String"},{"name":"price","kind":"scalar","type":"Int"},{"name":"imageUrl","kind":"scalar","type":"String"},{"name":"cuisine","kind":"scalar","type":"String"},{"name":"isAvailable","kind":"scalar","type":"Boolean"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"provider","kind":"object","type":"ProviderProfile","relationName":"MealToProviderProfile"},{"name":"category","kind":"object","type":"Category","relationName":"CategoryToMeal"},{"name":"orderItems","kind":"object","type":"OrderItem","relationName":"MealToOrderItem"},{"name":"reviews","kind":"object","type":"Review","relationName":"MealToReview"}],"dbName":"meal"},"Order":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"customerId","kind":"scalar","type":"String"},{"name":"status","kind":"enum","type":"OrderStatus"},{"name":"deliveryAddress","kind":"scalar","type":"String"},{"name":"phone","kind":"scalar","type":"String"},{"name":"note","kind":"scalar","type":"String"},{"name":"subTotal","kind":"scalar","type":"Int"},{"name":"deliveryFee","kind":"scalar","type":"Int"},{"name":"total","kind":"scalar","type":"Int"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"customer","kind":"object","type":"User","relationName":"OrderToUser"},{"name":"items","kind":"object","type":"OrderItem","relationName":"OrderToOrderItem"}],"dbName":"order"},"OrderItem":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"orderId","kind":"scalar","type":"String"},{"name":"customerId","kind":"scalar","type":"String"},{"name":"mealId","kind":"scalar","type":"String"},{"name":"quantity","kind":"scalar","type":"Int"},{"name":"unitPrice","kind":"scalar","type":"Int"},{"name":"lineTotal","kind":"scalar","type":"Int"},{"name":"order","kind":"object","type":"Order","relationName":"OrderToOrderItem"},{"name":"customer","kind":"object","type":"User","relationName":"OrderItemToUser"},{"name":"meal","kind":"object","type":"Meal","relationName":"MealToOrderItem"}],"dbName":"order_item"},"Review":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"customerId","kind":"scalar","type":"String"},{"name":"mealId","kind":"scalar","type":"String"},{"name":"rating","kind":"scalar","type":"Int"},{"name":"comment","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"customer","kind":"object","type":"User","relationName":"ReviewToUser"},{"name":"meal","kind":"object","type":"Meal","relationName":"MealToReview"}],"dbName":"review"}},"enums":{},"types":{}}');
-    defineDmmfProperty2(exports.Prisma, config.runtimeDataModel);
-    config.compilerWasm = {
+    config2.runtimeDataModel = JSON.parse('{"models":{"User":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"name","kind":"scalar","type":"String"},{"name":"email","kind":"scalar","type":"String"},{"name":"emailVerified","kind":"scalar","type":"Boolean"},{"name":"image","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"role","kind":"enum","type":"Role"},{"name":"phone","kind":"scalar","type":"String"},{"name":"status","kind":"enum","type":"UserStatus"},{"name":"sessions","kind":"object","type":"Session","relationName":"SessionToUser"},{"name":"accounts","kind":"object","type":"Account","relationName":"AccountToUser"},{"name":"providerProfile","kind":"object","type":"ProviderProfile","relationName":"ProviderProfileToUser"},{"name":"orders","kind":"object","type":"Order","relationName":"OrderToUser"},{"name":"reviews","kind":"object","type":"Review","relationName":"ReviewToUser"},{"name":"orderItems","kind":"object","type":"OrderItem","relationName":"OrderItemToUser"}],"dbName":"user"},"Session":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"expiresAt","kind":"scalar","type":"DateTime"},{"name":"token","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"ipAddress","kind":"scalar","type":"String"},{"name":"userAgent","kind":"scalar","type":"String"},{"name":"userId","kind":"scalar","type":"String"},{"name":"user","kind":"object","type":"User","relationName":"SessionToUser"}],"dbName":"session"},"Account":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"accountId","kind":"scalar","type":"String"},{"name":"providerId","kind":"scalar","type":"String"},{"name":"userId","kind":"scalar","type":"String"},{"name":"user","kind":"object","type":"User","relationName":"AccountToUser"},{"name":"accessToken","kind":"scalar","type":"String"},{"name":"refreshToken","kind":"scalar","type":"String"},{"name":"idToken","kind":"scalar","type":"String"},{"name":"accessTokenExpiresAt","kind":"scalar","type":"DateTime"},{"name":"refreshTokenExpiresAt","kind":"scalar","type":"DateTime"},{"name":"scope","kind":"scalar","type":"String"},{"name":"password","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"}],"dbName":"account"},"Verification":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"identifier","kind":"scalar","type":"String"},{"name":"value","kind":"scalar","type":"String"},{"name":"expiresAt","kind":"scalar","type":"DateTime"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"}],"dbName":"verification"},"ProviderProfile":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"userId","kind":"scalar","type":"String"},{"name":"shopName","kind":"scalar","type":"String"},{"name":"description","kind":"scalar","type":"String"},{"name":"address","kind":"scalar","type":"String"},{"name":"phone","kind":"scalar","type":"String"},{"name":"logoUrl","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"user","kind":"object","type":"User","relationName":"ProviderProfileToUser"},{"name":"meals","kind":"object","type":"Meal","relationName":"MealToProviderProfile"}],"dbName":"provider_profile"},"Category":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"name","kind":"scalar","type":"String"},{"name":"slug","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"meals","kind":"object","type":"Meal","relationName":"CategoryToMeal"}],"dbName":"category"},"Meal":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"providerId","kind":"scalar","type":"String"},{"name":"categoryId","kind":"scalar","type":"String"},{"name":"title","kind":"scalar","type":"String"},{"name":"description","kind":"scalar","type":"String"},{"name":"price","kind":"scalar","type":"Int"},{"name":"imageUrl","kind":"scalar","type":"String"},{"name":"cuisine","kind":"scalar","type":"String"},{"name":"isAvailable","kind":"scalar","type":"Boolean"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"provider","kind":"object","type":"ProviderProfile","relationName":"MealToProviderProfile"},{"name":"category","kind":"object","type":"Category","relationName":"CategoryToMeal"},{"name":"orderItems","kind":"object","type":"OrderItem","relationName":"MealToOrderItem"},{"name":"reviews","kind":"object","type":"Review","relationName":"MealToReview"}],"dbName":"meal"},"Order":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"customerId","kind":"scalar","type":"String"},{"name":"status","kind":"enum","type":"OrderStatus"},{"name":"deliveryAddress","kind":"scalar","type":"String"},{"name":"phone","kind":"scalar","type":"String"},{"name":"note","kind":"scalar","type":"String"},{"name":"subTotal","kind":"scalar","type":"Int"},{"name":"deliveryFee","kind":"scalar","type":"Int"},{"name":"total","kind":"scalar","type":"Int"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"customer","kind":"object","type":"User","relationName":"OrderToUser"},{"name":"items","kind":"object","type":"OrderItem","relationName":"OrderToOrderItem"}],"dbName":"order"},"OrderItem":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"orderId","kind":"scalar","type":"String"},{"name":"customerId","kind":"scalar","type":"String"},{"name":"mealId","kind":"scalar","type":"String"},{"name":"quantity","kind":"scalar","type":"Int"},{"name":"unitPrice","kind":"scalar","type":"Int"},{"name":"lineTotal","kind":"scalar","type":"Int"},{"name":"order","kind":"object","type":"Order","relationName":"OrderToOrderItem"},{"name":"customer","kind":"object","type":"User","relationName":"OrderItemToUser"},{"name":"meal","kind":"object","type":"Meal","relationName":"MealToOrderItem"}],"dbName":"order_item"},"Review":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"customerId","kind":"scalar","type":"String"},{"name":"mealId","kind":"scalar","type":"String"},{"name":"rating","kind":"scalar","type":"Int"},{"name":"comment","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"customer","kind":"object","type":"User","relationName":"ReviewToUser"},{"name":"meal","kind":"object","type":"Meal","relationName":"MealToReview"}],"dbName":"review"}},"enums":{},"types":{}}');
+    defineDmmfProperty2(exports.Prisma, config2.runtimeDataModel);
+    config2.compilerWasm = {
       getRuntime: async () => require_query_compiler_fast_bg(),
       getQueryCompilerWasmModule: async () => {
         const { Buffer: Buffer2 } = __require("buffer");
@@ -5869,9 +5873,9 @@ var require_prisma = __commonJS({
       },
       importName: "./query_compiler_fast_bg.js"
     };
-    var PrismaClient2 = getPrismaClient2(config);
-    exports.PrismaClient = PrismaClient2;
-    Object.assign(exports, Prisma2);
+    var PrismaClient3 = getPrismaClient3(config2);
+    exports.PrismaClient = PrismaClient3;
+    Object.assign(exports, Prisma);
   }
 });
 
@@ -7565,65 +7569,281 @@ function notFound(req, res) {
   });
 }
 
+// generated/prisma/client.ts
+import * as path from "path";
+import { fileURLToPath } from "url";
+
+// generated/prisma/internal/class.ts
+import * as runtime from "@prisma/client/runtime/client";
+var config = {
+  "previewFeatures": [],
+  "clientVersion": "7.3.0",
+  "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
+  "activeProvider": "postgresql",
+  "inlineSchema": '// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = "prisma-client"\n  output   = "../generated/prisma"\n}\n\ndatasource db {\n  provider = "postgresql"\n}\n\n// ENUMS FOR FOODHUB\n\nenum Role {\n  CUSTOMER\n  ADMIN\n  PROVIDER\n}\n\nenum UserStatus {\n  ACTIVE\n  SUSPENDED\n}\n\nenum OrderStatus {\n  PLACED\n  PREPARING\n  READY\n  DELIVERED\n  CANCELLED\n}\n\nmodel User {\n  id            String   @id\n  name          String\n  email         String\n  emailVerified Boolean  @default(false)\n  image         String?\n  createdAt     DateTime @default(now())\n  updatedAt     DateTime @updatedAt\n\n  role   Role?       @default(CUSTOMER)\n  phone  String?\n  status UserStatus? @default(ACTIVE)\n\n  sessions Session[]\n  accounts Account[]\n\n  providerProfile ProviderProfile?\n  orders          Order[]\n  reviews         Review[]\n\n  @@unique([email])\n  @@map("user")\n}\n\nmodel Session {\n  id        String   @id\n  expiresAt DateTime\n  token     String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  ipAddress String?\n  userAgent String?\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([token])\n  @@index([userId])\n  @@map("session")\n}\n\nmodel Account {\n  id                    String    @id\n  accountId             String\n  providerId            String\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String?\n  refreshToken          String?\n  idToken               String?\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String?\n  password              String?\n  createdAt             DateTime  @default(now())\n  updatedAt             DateTime  @updatedAt\n\n  @@index([userId])\n  @@map("account")\n}\n\nmodel Verification {\n  id         String   @id\n  identifier String\n  value      String\n  expiresAt  DateTime\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  @@index([identifier])\n  @@map("verification")\n}\n\n//  FOODHUB MODELS \n\nmodel ProviderProfile {\n  id          String   @id @default(cuid())\n  userId      String   @unique\n  shopName    String\n  description String?\n  address     String?\n  phone       String?\n  logoUrl     String?\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n  meals Meal[]\n\n  @@map("provider_profile")\n}\n\nmodel Category {\n  id        String   @id @default(cuid())\n  name      String   @unique\n  slug      String   @unique\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  meals Meal[]\n\n  @@map("category")\n}\n\nmodel Meal {\n  id          String   @id @default(cuid())\n  providerId  String\n  categoryId  String?\n  title       String\n  description String?\n  price       Int // store in smallest unit (BDT)\n  imageUrl    String?\n  cuisine     String?\n  isAvailable Boolean  @default(true)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  provider ProviderProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)\n  category Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n\n  orderItems OrderItem[]\n  reviews    Review[]\n\n  @@index([providerId])\n  @@index([categoryId])\n  @@index([isAvailable])\n  @@map("meal")\n}\n\nmodel Order {\n  id         String      @id @default(cuid())\n  customerId String\n  status     OrderStatus @default(PLACED)\n\n  deliveryAddress String\n  phone           String?\n  note            String?\n\n  subTotal    Int\n  deliveryFee Int @default(0)\n  total       Int\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  customer User        @relation(fields: [customerId], references: [id], onDelete: Cascade)\n  items    OrderItem[]\n\n  @@index([customerId])\n  @@index([status])\n  @@map("order")\n}\n\nmodel OrderItem {\n  id        String @id @default(cuid())\n  orderId   String\n  mealId    String\n  quantity  Int    @default(1)\n  unitPrice Int\n  lineTotal Int\n\n  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)\n  meal  Meal  @relation(fields: [mealId], references: [id], onDelete: Restrict)\n\n  @@index([orderId])\n  @@index([mealId])\n  @@map("order_item")\n}\n\nmodel Review {\n  id         String   @id @default(cuid())\n  customerId String\n  mealId     String\n  rating     Int // 1..5\n  comment    String?\n  createdAt  DateTime @default(now())\n\n  customer User @relation(fields: [customerId], references: [id], onDelete: Cascade)\n  meal     Meal @relation(fields: [mealId], references: [id], onDelete: Cascade)\n\n  @@unique([customerId, mealId])\n  @@index([mealId])\n  @@map("review")\n}\n',
+  "runtimeDataModel": {
+    "models": {},
+    "enums": {},
+    "types": {}
+  }
+};
+config.runtimeDataModel = JSON.parse('{"models":{"User":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"name","kind":"scalar","type":"String"},{"name":"email","kind":"scalar","type":"String"},{"name":"emailVerified","kind":"scalar","type":"Boolean"},{"name":"image","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"role","kind":"enum","type":"Role"},{"name":"phone","kind":"scalar","type":"String"},{"name":"status","kind":"enum","type":"UserStatus"},{"name":"sessions","kind":"object","type":"Session","relationName":"SessionToUser"},{"name":"accounts","kind":"object","type":"Account","relationName":"AccountToUser"},{"name":"providerProfile","kind":"object","type":"ProviderProfile","relationName":"ProviderProfileToUser"},{"name":"orders","kind":"object","type":"Order","relationName":"OrderToUser"},{"name":"reviews","kind":"object","type":"Review","relationName":"ReviewToUser"}],"dbName":"user"},"Session":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"expiresAt","kind":"scalar","type":"DateTime"},{"name":"token","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"ipAddress","kind":"scalar","type":"String"},{"name":"userAgent","kind":"scalar","type":"String"},{"name":"userId","kind":"scalar","type":"String"},{"name":"user","kind":"object","type":"User","relationName":"SessionToUser"}],"dbName":"session"},"Account":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"accountId","kind":"scalar","type":"String"},{"name":"providerId","kind":"scalar","type":"String"},{"name":"userId","kind":"scalar","type":"String"},{"name":"user","kind":"object","type":"User","relationName":"AccountToUser"},{"name":"accessToken","kind":"scalar","type":"String"},{"name":"refreshToken","kind":"scalar","type":"String"},{"name":"idToken","kind":"scalar","type":"String"},{"name":"accessTokenExpiresAt","kind":"scalar","type":"DateTime"},{"name":"refreshTokenExpiresAt","kind":"scalar","type":"DateTime"},{"name":"scope","kind":"scalar","type":"String"},{"name":"password","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"}],"dbName":"account"},"Verification":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"identifier","kind":"scalar","type":"String"},{"name":"value","kind":"scalar","type":"String"},{"name":"expiresAt","kind":"scalar","type":"DateTime"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"}],"dbName":"verification"},"ProviderProfile":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"userId","kind":"scalar","type":"String"},{"name":"shopName","kind":"scalar","type":"String"},{"name":"description","kind":"scalar","type":"String"},{"name":"address","kind":"scalar","type":"String"},{"name":"phone","kind":"scalar","type":"String"},{"name":"logoUrl","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"user","kind":"object","type":"User","relationName":"ProviderProfileToUser"},{"name":"meals","kind":"object","type":"Meal","relationName":"MealToProviderProfile"}],"dbName":"provider_profile"},"Category":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"name","kind":"scalar","type":"String"},{"name":"slug","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"meals","kind":"object","type":"Meal","relationName":"CategoryToMeal"}],"dbName":"category"},"Meal":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"providerId","kind":"scalar","type":"String"},{"name":"categoryId","kind":"scalar","type":"String"},{"name":"title","kind":"scalar","type":"String"},{"name":"description","kind":"scalar","type":"String"},{"name":"price","kind":"scalar","type":"Int"},{"name":"imageUrl","kind":"scalar","type":"String"},{"name":"cuisine","kind":"scalar","type":"String"},{"name":"isAvailable","kind":"scalar","type":"Boolean"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"provider","kind":"object","type":"ProviderProfile","relationName":"MealToProviderProfile"},{"name":"category","kind":"object","type":"Category","relationName":"CategoryToMeal"},{"name":"orderItems","kind":"object","type":"OrderItem","relationName":"MealToOrderItem"},{"name":"reviews","kind":"object","type":"Review","relationName":"MealToReview"}],"dbName":"meal"},"Order":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"customerId","kind":"scalar","type":"String"},{"name":"status","kind":"enum","type":"OrderStatus"},{"name":"deliveryAddress","kind":"scalar","type":"String"},{"name":"phone","kind":"scalar","type":"String"},{"name":"note","kind":"scalar","type":"String"},{"name":"subTotal","kind":"scalar","type":"Int"},{"name":"deliveryFee","kind":"scalar","type":"Int"},{"name":"total","kind":"scalar","type":"Int"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"updatedAt","kind":"scalar","type":"DateTime"},{"name":"customer","kind":"object","type":"User","relationName":"OrderToUser"},{"name":"items","kind":"object","type":"OrderItem","relationName":"OrderToOrderItem"}],"dbName":"order"},"OrderItem":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"orderId","kind":"scalar","type":"String"},{"name":"mealId","kind":"scalar","type":"String"},{"name":"quantity","kind":"scalar","type":"Int"},{"name":"unitPrice","kind":"scalar","type":"Int"},{"name":"lineTotal","kind":"scalar","type":"Int"},{"name":"order","kind":"object","type":"Order","relationName":"OrderToOrderItem"},{"name":"meal","kind":"object","type":"Meal","relationName":"MealToOrderItem"}],"dbName":"order_item"},"Review":{"fields":[{"name":"id","kind":"scalar","type":"String"},{"name":"customerId","kind":"scalar","type":"String"},{"name":"mealId","kind":"scalar","type":"String"},{"name":"rating","kind":"scalar","type":"Int"},{"name":"comment","kind":"scalar","type":"String"},{"name":"createdAt","kind":"scalar","type":"DateTime"},{"name":"customer","kind":"object","type":"User","relationName":"ReviewToUser"},{"name":"meal","kind":"object","type":"Meal","relationName":"MealToReview"}],"dbName":"review"}},"enums":{},"types":{}}');
+async function decodeBase64AsWasm(wasmBase64) {
+  const { Buffer: Buffer2 } = await import("buffer");
+  const wasmArray = Buffer2.from(wasmBase64, "base64");
+  return new WebAssembly.Module(wasmArray);
+}
+config.compilerWasm = {
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.mjs"),
+  getQueryCompilerWasmModule: async () => {
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.wasm-base64.mjs");
+    return await decodeBase64AsWasm(wasm);
+  },
+  importName: "./query_compiler_fast_bg.js"
+};
+function getPrismaClientClass() {
+  return runtime.getPrismaClient(config);
+}
+
+// generated/prisma/internal/prismaNamespace.ts
+var prismaNamespace_exports = {};
+__export(prismaNamespace_exports, {
+  AccountScalarFieldEnum: () => AccountScalarFieldEnum,
+  AnyNull: () => AnyNull3,
+  CategoryScalarFieldEnum: () => CategoryScalarFieldEnum,
+  DbNull: () => DbNull3,
+  Decimal: () => Decimal3,
+  JsonNull: () => JsonNull3,
+  MealScalarFieldEnum: () => MealScalarFieldEnum,
+  ModelName: () => ModelName,
+  NullTypes: () => NullTypes3,
+  NullsOrder: () => NullsOrder,
+  OrderItemScalarFieldEnum: () => OrderItemScalarFieldEnum,
+  OrderScalarFieldEnum: () => OrderScalarFieldEnum,
+  PrismaClientInitializationError: () => PrismaClientInitializationError3,
+  PrismaClientKnownRequestError: () => PrismaClientKnownRequestError3,
+  PrismaClientRustPanicError: () => PrismaClientRustPanicError3,
+  PrismaClientUnknownRequestError: () => PrismaClientUnknownRequestError3,
+  PrismaClientValidationError: () => PrismaClientValidationError3,
+  ProviderProfileScalarFieldEnum: () => ProviderProfileScalarFieldEnum,
+  QueryMode: () => QueryMode,
+  ReviewScalarFieldEnum: () => ReviewScalarFieldEnum,
+  SessionScalarFieldEnum: () => SessionScalarFieldEnum,
+  SortOrder: () => SortOrder,
+  Sql: () => Sql3,
+  TransactionIsolationLevel: () => TransactionIsolationLevel,
+  UserScalarFieldEnum: () => UserScalarFieldEnum,
+  VerificationScalarFieldEnum: () => VerificationScalarFieldEnum,
+  defineExtension: () => defineExtension,
+  empty: () => empty3,
+  getExtensionContext: () => getExtensionContext,
+  join: () => join3,
+  prismaVersion: () => prismaVersion,
+  raw: () => raw3,
+  sql: () => sql
+});
+import * as runtime2 from "@prisma/client/runtime/client";
+var PrismaClientKnownRequestError3 = runtime2.PrismaClientKnownRequestError;
+var PrismaClientUnknownRequestError3 = runtime2.PrismaClientUnknownRequestError;
+var PrismaClientRustPanicError3 = runtime2.PrismaClientRustPanicError;
+var PrismaClientInitializationError3 = runtime2.PrismaClientInitializationError;
+var PrismaClientValidationError3 = runtime2.PrismaClientValidationError;
+var sql = runtime2.sqltag;
+var empty3 = runtime2.empty;
+var join3 = runtime2.join;
+var raw3 = runtime2.raw;
+var Sql3 = runtime2.Sql;
+var Decimal3 = runtime2.Decimal;
+var getExtensionContext = runtime2.Extensions.getExtensionContext;
+var prismaVersion = {
+  client: "7.3.0",
+  engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
+};
+var NullTypes3 = {
+  DbNull: runtime2.NullTypes.DbNull,
+  JsonNull: runtime2.NullTypes.JsonNull,
+  AnyNull: runtime2.NullTypes.AnyNull
+};
+var DbNull3 = runtime2.DbNull;
+var JsonNull3 = runtime2.JsonNull;
+var AnyNull3 = runtime2.AnyNull;
+var ModelName = {
+  User: "User",
+  Session: "Session",
+  Account: "Account",
+  Verification: "Verification",
+  ProviderProfile: "ProviderProfile",
+  Category: "Category",
+  Meal: "Meal",
+  Order: "Order",
+  OrderItem: "OrderItem",
+  Review: "Review"
+};
+var TransactionIsolationLevel = runtime2.makeStrictEnum({
+  ReadUncommitted: "ReadUncommitted",
+  ReadCommitted: "ReadCommitted",
+  RepeatableRead: "RepeatableRead",
+  Serializable: "Serializable"
+});
+var UserScalarFieldEnum = {
+  id: "id",
+  name: "name",
+  email: "email",
+  emailVerified: "emailVerified",
+  image: "image",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  role: "role",
+  phone: "phone",
+  status: "status"
+};
+var SessionScalarFieldEnum = {
+  id: "id",
+  expiresAt: "expiresAt",
+  token: "token",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  ipAddress: "ipAddress",
+  userAgent: "userAgent",
+  userId: "userId"
+};
+var AccountScalarFieldEnum = {
+  id: "id",
+  accountId: "accountId",
+  providerId: "providerId",
+  userId: "userId",
+  accessToken: "accessToken",
+  refreshToken: "refreshToken",
+  idToken: "idToken",
+  accessTokenExpiresAt: "accessTokenExpiresAt",
+  refreshTokenExpiresAt: "refreshTokenExpiresAt",
+  scope: "scope",
+  password: "password",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt"
+};
+var VerificationScalarFieldEnum = {
+  id: "id",
+  identifier: "identifier",
+  value: "value",
+  expiresAt: "expiresAt",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt"
+};
+var ProviderProfileScalarFieldEnum = {
+  id: "id",
+  userId: "userId",
+  shopName: "shopName",
+  description: "description",
+  address: "address",
+  phone: "phone",
+  logoUrl: "logoUrl",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt"
+};
+var CategoryScalarFieldEnum = {
+  id: "id",
+  name: "name",
+  slug: "slug",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt"
+};
+var MealScalarFieldEnum = {
+  id: "id",
+  providerId: "providerId",
+  categoryId: "categoryId",
+  title: "title",
+  description: "description",
+  price: "price",
+  imageUrl: "imageUrl",
+  cuisine: "cuisine",
+  isAvailable: "isAvailable",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt"
+};
+var OrderScalarFieldEnum = {
+  id: "id",
+  customerId: "customerId",
+  status: "status",
+  deliveryAddress: "deliveryAddress",
+  phone: "phone",
+  note: "note",
+  subTotal: "subTotal",
+  deliveryFee: "deliveryFee",
+  total: "total",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt"
+};
+var OrderItemScalarFieldEnum = {
+  id: "id",
+  orderId: "orderId",
+  mealId: "mealId",
+  quantity: "quantity",
+  unitPrice: "unitPrice",
+  lineTotal: "lineTotal"
+};
+var ReviewScalarFieldEnum = {
+  id: "id",
+  customerId: "customerId",
+  mealId: "mealId",
+  rating: "rating",
+  comment: "comment",
+  createdAt: "createdAt"
+};
+var SortOrder = {
+  asc: "asc",
+  desc: "desc"
+};
+var QueryMode = {
+  default: "default",
+  insensitive: "insensitive"
+};
+var NullsOrder = {
+  first: "first",
+  last: "last"
+};
+var defineExtension = runtime2.Extensions.defineExtension;
+
+// generated/prisma/client.ts
+globalThis["__dirname"] = path.dirname(fileURLToPath(import.meta.url));
+var PrismaClient2 = getPrismaClientClass();
+
 // src/middlewares/globalErrorHandler.ts
-var import_prisma14 = __toESM(require_prisma(), 1);
 function errorHandler(err, req, res, next) {
   let statusCode = 500;
   let errorMessage = "Internal Server Error";
-  const isDev = process.env.NODE_ENV !== "production";
-  const isError = err instanceof Error;
-  if (isError && err.message.includes("Unable to start a transaction")) {
-    statusCode = 503;
-    errorMessage = "Database is busy. Please try again.";
-  } else if (err instanceof import_prisma14.Prisma.PrismaClientValidationError) {
+  let errorDetails = err;
+  if (err instanceof prismaNamespace_exports.PrismaClientValidationError) {
     statusCode = 400;
-    errorMessage = "You provided incorrect field type or missing fields!";
-  } else if (err instanceof import_prisma14.Prisma.PrismaClientKnownRequestError) {
+    errorMessage = "You provide incorrect field type or missing fields!";
+  } else if (err instanceof prismaNamespace_exports.PrismaClientKnownRequestError) {
     if (err.code === "P2025") {
-      statusCode = 404;
-      errorMessage = "Record not found. The operation depends on one or more records that were required but not found.";
+      statusCode = 400;
+      errorMessage = "An operation failed because it depends on one or more records that were required but not found.";
     } else if (err.code === "P2002") {
-      statusCode = 409;
-      errorMessage = "Duplicate key error.";
+      statusCode = 400;
+      errorMessage = "Duplicate key error";
     } else if (err.code === "P2003") {
       statusCode = 400;
-      errorMessage = "Foreign key constraint failed.";
-    } else if (err.code === "P1001") {
-      statusCode = 503;
-      errorMessage = "Can't reach database server.";
-    } else if (err.code === "P1002") {
-      statusCode = 504;
-      errorMessage = "Database request timed out.";
-    } else {
-      statusCode = 400;
-      errorMessage = `Database error (${err.code}).`;
+      errorMessage = "Foreign key constraint failed";
     }
-  } else if (err instanceof import_prisma14.Prisma.PrismaClientUnknownRequestError) {
+  } else if (err instanceof prismaNamespace_exports.PrismaClientUnknownRequestError) {
     statusCode = 500;
-    errorMessage = "Error occurred during query execution.";
-  } else if (err instanceof import_prisma14.Prisma.PrismaClientInitializationError) {
+    errorMessage = "Error occurred during query execution";
+  } else if (err instanceof prismaNamespace_exports.PrismaClientInitializationError) {
     if (err.errorCode === "P1000") {
       statusCode = 401;
-      errorMessage = "Authentication failed. Please check your credentials!";
+      errorMessage = "Authentication failed. Please check your creditials!";
     } else if (err.errorCode === "P1001") {
-      statusCode = 503;
-      errorMessage = "Can't reach database server.";
-    } else {
-      statusCode = 503;
-      errorMessage = "Database initialization failed.";
+      statusCode = 400;
+      errorMessage = "Can't reach database server";
     }
   }
-  const payload = { message: errorMessage };
-  if (isDev) {
-    payload.debug = {
-      name: isError ? err.name : void 0,
-      message: isError ? err.message : void 0,
-      stack: isError ? err.stack : void 0,
-      code: err instanceof import_prisma14.Prisma.PrismaClientKnownRequestError ? err.code : void 0,
-      meta: err instanceof import_prisma14.Prisma.PrismaClientKnownRequestError ? err.meta : void 0
-    };
-  }
-  res.status(statusCode).json(payload);
+  res.status(statusCode);
+  res.json({
+    message: errorMessage,
+    error: errorDetails
+  });
 }
 var globalErrorHandler_default = errorHandler;
 
