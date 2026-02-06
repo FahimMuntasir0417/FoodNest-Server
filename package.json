@@ -1,36 +1,38 @@
 {
-  "name": "foodhub",
+  "name": "prisma-blog-app",
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "npx tsx watch ./src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tsx watch src/server.ts",
     "seed:admin": "npx tsx src/scripts/seedAdmin.ts",
-    "build": "tsup src/index.ts --format cjs --platform node --target node20 --outDir api --external pg-native --external @prisma/client --external @prisma/adapter-pg --external @prisma/client-runtime-utils",
+    "build": "prisma generate && tsup src/index.ts --format esm --platform node --target node20 --outDir api --external pg-native --external @prisma/client --external prisma --external .prisma --external @prisma/client-runtime-utils",
     "postinstall": "prisma generate"
   },
-  "dependencies": {
-    "@prisma/adapter-pg": "^7.3.0",
-    "@prisma/client": "^7.3.0",
-    "better-auth": "^1.4.17",
-    "cors": "^2.8.6",
-    "dotenv": "^17.2.3",
-    "express": "^5.2.1",
-    "generate": "^0.14.0",
-    "nodemailer": "^7.0.12",
-    "pg": "^8.17.2",
-    "serverless-http": "^3.2.0"
-  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0",
   "devDependencies": {
-    "@better-auth/cli": "^1.4.17",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
-    "@types/node": "^25.0.10",
-    "@types/nodemailer": "^7.0.5",
+    "@types/node": "^25.0.3",
+    "@types/nodemailer": "^7.0.4",
     "@types/pg": "^8.16.0",
-    "prisma": "^7.3.0",
+    "prisma": "^7.2.0",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "better-auth": "^1.4.9",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "nodemailer": "^7.0.12",
+    "pg": "^8.16.3"
   }
 }

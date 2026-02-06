@@ -25,7 +25,8 @@ app.use(
   }),
 );
 
-app.all("/api/auth/*", toNodeHandler(auth));
+// app.all("/api/auth/*", toNodeHandler(auth));
+app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use("/api/v1/users", useRouter);
 app.use("/api/v1/categories", categoriesRouter);
@@ -35,7 +36,7 @@ app.use("/api/v1/providers", providersRouter);
 app.use("/api/v1/order-items", orderItemsRouter);
 app.use("/api/v1/orders", ordersRouter);
 
-app.get("/", (_req, res) => res.send("Hello World!"));
+app.get("/", (req, res) => res.send("Hello World!"));
 
 app.use(notFound);
 app.use(errorHandler);
