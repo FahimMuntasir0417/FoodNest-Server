@@ -53,7 +53,7 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
       mealId,
       customerId: req.user.id,
       rating,
-      comment,
+      ...(comment !== undefined ? { comment } : {}),
     });
 
     res.status(201).json(created);
@@ -67,14 +67,25 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const requireParamString = (v: unknown, name: string): string => {
+  if (typeof v === "string" && v.trim().length > 0) return v;
+
+  // Mostly query params can be arrays; harmless to support here too
+  if (Array.isArray(v) && typeof v[0] === "string" && v[0].trim().length > 0) {
+    return v[0];
+  }
+
+  throw new Error(`${name} is required`);
+};
+
 const update = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
+    const id = requireParamString(req.params.id, "id");
     const { rating, comment } = req.body as UpdateReviewBody;
 
     if (!req.user?.id) return res.status(401).json({ message: "Unauthorized" });
 
-    const review = await ReviewsService.getById(id as string);
+    const review = await ReviewsService.getById(id);
     if (!review) return res.status(404).json({ message: "Review not found" });
 
     if (req.user.role !== "ADMIN" && review.customerId !== req.user.id) {
@@ -87,9 +98,17 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
         .json({ message: "rating must be between 1 and 5" });
     }
 
-    const updated = await ReviewsService.update(id, { rating, comment });
+    const updated = await ReviewsService.update(id, {
+      ...(rating !== undefined ? { rating } : {}),
+      ...(comment !== undefined ? { comment } : {}),
+    });
+
     res.json(updated);
-  } catch (err) {
+  } catch (err: any) {
+    // if requireParamString throws
+    if (err?.message === "id is required") {
+      return res.status(400).json({ message: "id is required" });
+    }
     next(err);
   }
 };

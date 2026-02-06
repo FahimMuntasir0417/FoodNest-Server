@@ -73,11 +73,17 @@ const updateOrderStatus = async (
 
 const details = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = req.params;
+    const { id } = req.params as { id?: string };
+
+    if (!id) {
+      return res.status(400).json({ message: "id is required" });
+    }
+
     const provider = await ProvidersService.details(id);
     if (!provider) {
       return res.status(404).json({ message: "Provider not found" });
     }
+
     res.json(provider);
   } catch (err) {
     next(err);
@@ -100,19 +106,17 @@ const createMe = async (req: Request, res: Response, next: NextFunction) => {
     const { shopName, description, address, phone, logoUrl } =
       req.body as ProviderBody;
 
-    // ✅ shopName must exist because Prisma requires it
     if (!shopName) {
       return res.status(400).json({ message: "shopName is required" });
     }
 
-    // ✅ now TypeScript knows shopName is string
     const profile = await ProvidersService.create({
       userId: req.user.id,
       shopName,
-      description,
-      address,
-      phone,
-      logoUrl,
+      ...(description !== undefined ? { description } : {}),
+      ...(address !== undefined ? { address } : {}),
+      ...(phone !== undefined ? { phone } : {}),
+      ...(logoUrl !== undefined ? { logoUrl } : {}),
     });
 
     res.status(201).json(profile);

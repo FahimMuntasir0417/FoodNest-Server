@@ -5893,7 +5893,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { customSession } from "better-auth/plugins";
 
 // src/lib/prisma.ts
-var import_prisma = __toESM(require_prisma(), 1);
+var import_prisma = __toESM(require_prisma());
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 var connectionString = process.env.DATABASE_URL;
@@ -6038,7 +6038,7 @@ var UserServices = {
 };
 
 // src/modules/user/user.controller.ts
-var import_prisma5 = __toESM(require_prisma(), 1);
+var import_prisma5 = __toESM(require_prisma());
 var userList = async (req, res, next) => {
   try {
     const users = await UserServices.listUser();
@@ -6791,7 +6791,7 @@ var ProvidersService = {
 };
 
 // src/modules/providers/providers.controller.ts
-var import_prisma11 = __toESM(require_prisma(), 1);
+var import_prisma11 = __toESM(require_prisma());
 var list6 = async (req, res, next) => {
   try {
     const providers = await ProvidersService.list();
