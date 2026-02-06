@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx tsx watch ./src/server.ts",
     "seed:admin": "npx tsx src/scripts/seedAdmin.ts",
-    "build": "tsup src/index.ts --format esm --platform node --target node20 --outDir api --external pg-native --external @prisma/client --external @prisma/adapter-pg --external @prisma/client-runtime-utils",
+    "build": "tsup src/index.ts --format cjs --platform node --target node20 --outDir api --external pg-native --external @prisma/client --external @prisma/adapter-pg --external @prisma/client-runtime-utils",
     "postinstall": "prisma generate"
   },
   "dependencies": {
