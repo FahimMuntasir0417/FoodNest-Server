@@ -1,6 +1,7 @@
 import { prisma } from "../lib/prisma";
-import { UserRole } from "../middlewares/auth";
+
 import "dotenv/config";
+import { UserRole } from "../types/user-role";
 
 async function seedAdmin() {
   try {

@@ -1,13 +1,15 @@
 import { Router } from "express";
-import auth, { UserRole } from "../../middlewares/auth";
+
 import { ProvidersController } from "./providers.controller";
+import { UserRole } from "../../types/user-role";
+import auth from "../../middlewares/auth";
 
 const router = Router();
 
 // ✅ Provider orders MUST come before "/:id"
 router.get(
   "/orders",
-  auth(UserRole.PROVIDER, UserRole.ADMIN),
+  auth(UserRole.PROVIDER, UserRole.CUSTOMER),
   ProvidersController.getOrders,
 );
 
@@ -18,7 +20,11 @@ router.patch(
 );
 
 // Public: list providers
-router.get("/", ProvidersController.list);
+router.get(
+  "/",
+  auth(UserRole.ADMIN, UserRole.CUSTOMER),
+  ProvidersController.list,
+);
 
 // Public: provider details (with meals)
 router.get("/:id", ProvidersController.details);

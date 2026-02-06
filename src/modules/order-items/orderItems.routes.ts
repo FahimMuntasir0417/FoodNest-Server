@@ -1,6 +1,7 @@
 import { Router } from "express";
-import auth, { UserRole } from "../../middlewares/auth";
+import auth from "../../middlewares/auth";
 import { OrderItemsController } from "./orderItems.controller";
+import { UserRole } from "../../types/user-role";
 
 const router = Router();
 
@@ -28,7 +29,7 @@ router.get(
 // Single item
 router.get(
   "/:id",
-  auth(UserRole.CUSTOMER, UserRole.ADMIN),
+  auth(UserRole.CUSTOMER, UserRole.ADMIN, UserRole.PROVIDER),
   OrderItemsController.getById,
 );
 

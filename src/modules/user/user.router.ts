@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import { UserController } from "./user.controller";
-import auth, { UserRole } from "../../middlewares/auth";
+import auth from "../../middlewares/auth";
+import { UserRole } from "../../types/user-role";
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.get("/", auth(UserRole.ADMIN), UserController.userList);
 router.get("/me", auth(), UserController.getMe);
 
 // get user by id (admin) (✅ can include providerId now)
-router.get("/:id", auth(UserRole.ADMIN), UserController.getUserAdminByid);
+router.get("/:id", auth(), UserController.getUserAdminByid);
 
 // Admin: update user role
 router.patch("/:id", auth(UserRole.ADMIN), UserController.updateUserRole);

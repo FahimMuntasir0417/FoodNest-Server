@@ -14,11 +14,12 @@ import errorHandler from "./middlewares/globalErrorHandler";
 
 const app: Application = express();
 
+const origin_url = process.env.SEED_API_ORIGIN ?? "http://localhost:3000";
 app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: origin_url,
     credentials: true,
   }),
 );
@@ -36,14 +37,7 @@ app.use("/api/v1/reviews", reviewsRouter);
 
 // app.use("/api/v1/providers", providersRouter);
 
-app.use(
-  "/api/v1/providers",
-  (req, _res, next) => {
-    console.log("✅ HIT /api/v1/providers:", req.method, req.originalUrl);
-    next();
-  },
-  providersRouter,
-);
+app.use("/api/v1/providers", providersRouter);
 
 app.use("/api/v1/order-items", orderItemsRouter);
 

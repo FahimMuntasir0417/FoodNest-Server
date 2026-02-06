@@ -1,11 +1,12 @@
 import { Router } from "express";
-import auth, { UserRole } from "../../middlewares/auth"; // adjust path if needed
+import auth from "../../middlewares/auth"; // adjust path if needed
 import { MealsController } from "./meals.controller";
+import { UserRole } from "../../types/user-role";
 
 const router = Router();
 
 // Public: list meals (filters)
-router.get("/", auth(), MealsController.list);
+router.get("/", MealsController.list);
 
 // Public: meal details
 router.get("/:id", MealsController.details);
@@ -13,7 +14,7 @@ router.get("/:id", MealsController.details);
 // Provider/Admin: create meal
 router.post(
   "/",
-  auth(UserRole.PROVIDER, UserRole.ADMIN, UserRole.CUSTOMER),
+  auth(UserRole.PROVIDER, UserRole.ADMIN),
   MealsController.create,
 );
 
@@ -27,7 +28,7 @@ router.patch(
 // Provider/Admin: delete meal
 router.delete(
   "/:id",
-  auth(UserRole.PROVIDER, UserRole.ADMIN, UserRole.CUSTOMER),
+  auth(UserRole.PROVIDER, UserRole.ADMIN),
   MealsController.remove,
 );
 

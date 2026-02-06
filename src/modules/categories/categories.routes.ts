@@ -1,6 +1,7 @@
 import { Router } from "express";
-import auth, { UserRole } from "../../middlewares/auth"; // adjust path if needed
+import auth from "../../middlewares/auth"; // adjust path if needed
 import { CategoriesController } from "./categories.controller";
+import { UserRole } from "../../types/user-role";
 
 const router = Router();
 
@@ -10,7 +11,11 @@ router.get("/", CategoriesController.list);
 
 // Admin: create category
 // /api/categories
-router.post("/", auth(UserRole.PROVIDER), CategoriesController.create);
+router.post(
+  "/",
+  auth(UserRole.PROVIDER, UserRole.ADMIN),
+  CategoriesController.create,
+);
 
 // Admin:  category by id
 // /api/categories/id
