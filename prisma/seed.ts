@@ -1,7 +1,7 @@
 // prisma/seed.ts
 import "dotenv/config";
-import { PrismaClient } from "../generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "node:crypto";
 
 const adapter = new PrismaPg({
@@ -13,7 +13,6 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   const providerUserEmail = "provider1@foodhub.com";
 
-  // Create or update provider user
   const user = await prisma.user.upsert({
     where: { email: providerUserEmail },
     update: {
@@ -61,7 +60,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error(" Seed failed:", e);
+    console.error("Seed failed:", e);
     process.exit(1);
   })
   .finally(async () => {
