@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ProvidersService } from "./providers.service.js";
-import { OrderStatus } from "../../../generated/prisma/index.js";
+import { OrderStatus } from "@prisma/client";
 
 type ProviderBody = {
   shopName?: string;
