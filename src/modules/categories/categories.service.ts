@@ -1,4 +1,4 @@
-import { prisma } from "../../lib/prisma"; // adjust to your prisma export
+import { prisma } from "../../lib/prisma.js"; // adjust to your prisma export
 
 type CreateCategoryInput = {
   name: string;

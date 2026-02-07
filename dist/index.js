@@ -8,10 +8,6 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -28,7 +24,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // generated/prisma/runtime/client.js
 var require_client = __commonJS({
@@ -5884,15 +5879,11 @@ var require_client2 = __commonJS({
 });
 
 // src/index.ts
-var index_exports = {};
-__export(index_exports, {
-  default: () => index_default
-});
-module.exports = __toCommonJS(index_exports);
+var import_config = require("dotenv/config");
 
 // src/app.ts
-var import_express8 = __toESM(require("express"));
-var import_cors = __toESM(require("cors"));
+var import_express8 = __toESM(require("express"), 1);
+var import_cors = __toESM(require("cors"), 1);
 var import_node = require("better-auth/node");
 
 // src/lib/auth.ts
@@ -5901,15 +5892,24 @@ var import_prisma = require("better-auth/adapters/prisma");
 var import_plugins = require("better-auth/plugins");
 
 // src/lib/prisma.ts
-var import_adapter_pg = require("@prisma/adapter-pg");
 var import_client = require("@prisma/client");
-var connectionString = process.env.DATABASE_URL;
-var adapter = new import_adapter_pg.PrismaPg({ connectionString });
+var import_adapter_pg = require("@prisma/adapter-pg");
+var import_pg = require("pg");
+var pool = new import_pg.Pool({
+  connectionString: process.env.DATABASE_URL
+});
+var adapter = new import_adapter_pg.PrismaPg(pool);
 var globalForPrisma = globalThis;
-var prisma = globalForPrisma.prisma ?? (globalForPrisma.prisma = new import_client.PrismaClient({ adapter }));
+var prisma = globalForPrisma.prisma ?? new import_client.PrismaClient({
+  adapter,
+  log: ["error", "warn"]
+});
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
+}
 
 // src/lib/mailer.ts
-var import_nodemailer = __toESM(require("nodemailer"));
+var import_nodemailer = __toESM(require("nodemailer"), 1);
 var transporter = import_nodemailer.default.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT || 587),
@@ -5996,7 +5996,7 @@ var auth = (0, import_better_auth.betterAuth)({
 });
 
 // src/modules/user/user.router.ts
-var import_express = __toESM(require("express"));
+var import_express = __toESM(require("express"), 1);
 
 // src/modules/user/user.service.ts
 var listUser = async () => {
@@ -6046,7 +6046,7 @@ var UserServices = {
 };
 
 // src/modules/user/user.controller.ts
-var import_prisma4 = __toESM(require_prisma());
+var import_prisma4 = __toESM(require_prisma(), 1);
 var userList = async (req, res, next) => {
   try {
     const users = await UserServices.listUser();
@@ -6812,7 +6812,7 @@ var ProvidersService = {
 };
 
 // src/modules/providers/providers.controller.ts
-var import_prisma10 = __toESM(require_prisma());
+var import_prisma10 = __toESM(require_prisma(), 1);
 var list6 = async (req, res, next) => {
   try {
     const providers = await ProvidersService.list();
@@ -7594,7 +7594,7 @@ function notFound(req, res) {
 }
 
 // src/middlewares/globalErrorHandler.ts
-var import_client2 = __toESM(require_client2());
+var import_client2 = __toESM(require_client2(), 1);
 function errorHandler(err, req, res, next) {
   let statusCode = 500;
   let errorMessage = "Internal Server Error";
@@ -7650,15 +7650,30 @@ app.use("/api/v1/reviews", reviewsRouter);
 app.use("/api/v1/providers", providersRouter);
 app.use("/api/v1/order-items", orderItemsRouter);
 app.use("/api/v1/orders", ordersRouter);
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (_req, res) => res.send("Hello World!"));
 app.use(notFound);
 app.use(globalErrorHandler_default);
 var app_default = app;
 
 // src/index.ts
-var index_default = app_default;
+var port = Number(process.env.PORT || 4e3);
+async function main() {
+  try {
+    await prisma.$connect();
+    console.log("Connected database successfully");
+    app_default.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+  } catch (error) {
+    console.error(error);
+    await prisma.$disconnect();
+    process.exit(1);
+  }
+}
+main();
 /*! Bundled license information:
 
 @noble/hashes/utils.js:
   (*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) *)
 */
+//# sourceMappingURL=index.js.map

@@ -1,5 +1,5 @@
-import { OrderStatus } from "../../../generated/prisma";
-import { prisma } from "../../lib/prisma";
+import { OrderStatus } from "../../../generated/prisma/index.js";
+import { prisma } from "../../lib/prisma.js";
 
 type CreateProviderInput = {
   userId: string;

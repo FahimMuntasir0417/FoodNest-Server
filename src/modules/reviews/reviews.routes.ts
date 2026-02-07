@@ -1,7 +1,7 @@
 import { Router } from "express";
-import auth from "../../middlewares/auth"; // adjust path
-import { ReviewsController } from "./reviews.controller";
-import { UserRole } from "../../types/user-role";
+import auth from "../../middlewares/auth.js"; // adjust path
+import { ReviewsController } from "./reviews.controller.js";
+import { UserRole } from "../../types/user-role.js";
 
 const router = Router();
 

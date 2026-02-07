@@ -1,7 +1,7 @@
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.js";
 
 import "dotenv/config";
-import { UserRole } from "../types/user-role";
+import { UserRole } from "../types/user-role.js";
 
 async function seedAdmin() {
   try {

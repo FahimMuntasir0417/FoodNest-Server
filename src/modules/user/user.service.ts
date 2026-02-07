@@ -1,5 +1,5 @@
-import { Role } from "../../../generated/prisma";
-import { prisma } from "../../lib/prisma";
+import { Role } from "../../../generated/prisma/index.js";
+import { prisma } from "../../lib/prisma.js";
 
 const listUser = async () => {
   return prisma.user.findMany({

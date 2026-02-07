@@ -1,4 +1,4 @@
-import type { UserRole } from "../middlewares/auth";
+import type { UserRole } from "../middlewares/auth.js";
 // OR better: move UserRole to src/types/user-role.ts and import from there
 
 declare global {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { auth as betterAuth } from "../lib/auth";
+import { auth as betterAuth } from "../lib/auth.js";
 
 const router: Router = Router();
 

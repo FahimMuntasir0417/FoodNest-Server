@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { MealsService } from "./meals.service";
+import { MealsService } from "./meals.service.js";
 
 type ListMealsQuery = {
   providerId?: string;

@@ -1,8 +1,8 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { customSession } from "better-auth/plugins"; // ✅ ADD THIS
-import { prisma } from "./prisma";
-import { transporter } from "./mailer";
+import { prisma } from "./prisma.js";
+import { transporter } from "./mailer.js";
 
 const origin_url = process.env.SEED_API_ORIGIN ?? "http://localhost:3000";
 const auth_base_url =

@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
-import { auth as betterAuth } from "../lib/auth";
-import { prisma } from "../lib/prisma";
-import { UserRole } from "../types/user-role";
+import { auth as betterAuth } from "../lib/auth.js";
+import { prisma } from "../lib/prisma.js";
+import { UserRole } from "../types/user-role.js";
 
 const isUserRole = (v: any): v is UserRole =>
   v === UserRole.ADMIN || v === UserRole.PROVIDER || v === UserRole.CUSTOMER;

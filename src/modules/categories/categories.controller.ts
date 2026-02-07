@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { CategoriesService } from "./categories.service";
+import { CategoriesService } from "./categories.service.js";
 
 type CreateCategoryBody = {
   name?: string;

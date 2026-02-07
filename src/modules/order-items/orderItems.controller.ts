@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { OrderItemsService } from "./orderItems.service";
+import { OrderItemsService } from "./orderItems.service.js";
 
 type CreateBody = { mealId?: string; quantity?: number };
 type UpdateBody = { quantity?: number };

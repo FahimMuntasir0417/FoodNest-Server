@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { OrdersService } from "./order.service";
+import { OrdersService } from "./order.service.js";
 
 type CreateOrderBody = {
   deliveryAddress?: string;

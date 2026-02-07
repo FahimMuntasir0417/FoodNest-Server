@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { UserServices } from "./user.service";
-import { Role } from "../../../generated/prisma";
+import { UserServices } from "./user.service.js";
+import { Role } from "../../../generated/prisma/index.js";
 
 const userList = async (req: Request, res: Response, next: NextFunction) => {
   try {

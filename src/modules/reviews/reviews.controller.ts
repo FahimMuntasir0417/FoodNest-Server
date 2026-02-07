@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ReviewsService } from "./reviews.service";
+import { ReviewsService } from "./reviews.service.js";
 
 type CreateReviewBody = {
   mealId?: string;

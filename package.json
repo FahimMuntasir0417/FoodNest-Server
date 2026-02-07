@@ -5,9 +5,9 @@
   "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx tsx watch src/server.ts",
+    "dev": "npx tsx watch src/index.ts",
     "seed:admin": "npx tsx src/scripts/seedAdmin.ts",
-    "build": "prisma generate && tsup-node src/index.ts --format cjs --platform node --target node20 --outDir api --external pg-native",
+    "build": "prisma generate && tsup",
     "postinstall": "prisma generate"
   },
   "keywords": [],
