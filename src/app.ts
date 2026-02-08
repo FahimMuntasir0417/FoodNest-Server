@@ -18,6 +18,8 @@ const app: Application = express();
 
 app.use(express.json());
 
+app.set("trust proxy", true);
+
 app.use(
   cors({
     origin: process.env.SEED_API_ORIGIN ?? "http://localhost:3000",
