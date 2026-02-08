@@ -9,7 +9,7 @@ const router = Router();
 // ✅ Provider orders MUST come before "/:id"
 router.get(
   "/orders",
-  auth(UserRole.PROVIDER, UserRole.CUSTOMER),
+  auth(UserRole.PROVIDER, UserRole.ADMIN, UserRole.CUSTOMER),
   ProvidersController.getOrders,
 );
 
@@ -22,7 +22,7 @@ router.patch(
 // Public: list providers
 router.get(
   "/",
-  auth(UserRole.ADMIN, UserRole.CUSTOMER),
+  auth(UserRole.ADMIN, UserRole.PROVIDER, UserRole.CUSTOMER),
   ProvidersController.list,
 );
 
@@ -39,7 +39,7 @@ router.post(
 // Provider/Admin: update my profile
 router.patch(
   "/me",
-  auth(UserRole.PROVIDER, UserRole.ADMIN),
+  auth(UserRole.PROVIDER, UserRole.CUSTOMER, UserRole.ADMIN),
   ProvidersController.updateMe,
 );
 
