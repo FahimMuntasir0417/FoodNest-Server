@@ -40,7 +40,7 @@ export const auth = betterAuth({
   // ✅ Email + Password
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: true,
+    // requireEmailVerification: true,
   },
 
   // ✅ Google OAuth
@@ -52,20 +52,20 @@ export const auth = betterAuth({
   },
 
   // ✅ Email Verification via Nodemailer
-  emailVerification: {
-    sendVerificationEmail: async ({ user, url }) => {
-      await transporter.sendMail({
-        from: process.env.EMAIL_FROM!,
-        to: user.email,
-        subject: "Verify your email",
-        html: `
-          <h2>Verify your email</h2>
-          <p>Click the link below to verify your account:</p>
-          <a href="http://localhost:3000/">${url}</a>
-        `,
-      });
-    },
-  },
+  // emailVerification: {
+  //   sendVerificationEmail: async ({ user, url }) => {
+  //     await transporter.sendMail({
+  //       from: process.env.EMAIL_FROM!,
+  //       to: user.email,
+  //       subject: "Verify your email",
+  //       html: `
+  //         <h2>Verify your email</h2>
+  //         <p>Click the link below to verify your account:</p>
+  //         <a href="http://localhost:3000/">${url}</a>
+  //       `,
+  //     });
+  //   },
+  // },
 
   // ✅ ADD THIS: inject providerId into session response
   plugins: [
