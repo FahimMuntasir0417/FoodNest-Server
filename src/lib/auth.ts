@@ -84,6 +84,27 @@ export const auth = betterAuth({
       };
     }),
   ],
+
+  advanced: {
+    defaultCookieAttributes: {
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
+      //extra
+      path: "/",
+    },
+    trustProxy: true,
+    cookies: {
+      state: {
+        attributes: {
+          sameSite: "none",
+          secure: true,
+          // extra
+          path: "/",
+        },
+      },
+    },
+  },
 });
 
 // import { betterAuth } from "better-auth";
