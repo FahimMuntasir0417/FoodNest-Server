@@ -12,7 +12,7 @@ export const auth = betterAuth({
   baseURL: auth_base_url,
 
   // ✅ MUST: frontend origin allowed
-  trustedOrigins: [origin_url],
+  trustedOrigins: [origin_url, "https://food-nest-client.vercel.app"],
 
   database: prismaAdapter(prisma, {
     provider: "postgresql",
