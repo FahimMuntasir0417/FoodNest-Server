@@ -4,9 +4,9 @@ import { customSession } from "better-auth/plugins"; // ✅ ADD THIS
 import { prisma } from "./prisma.js";
 import { transporter } from "./mailer.js";
 
-const origin_url = process.env.SEED_API_ORIGIN ?? "http://localhost:3000";
+const origin_url = process.env.SEED_API_ORIGIN || "http://localhost:3000";
 const auth_base_url =
-  process.env.BETTER_AUTH_BASE_URL ?? "http://localhost:4000";
+  process.env.BETTER_AUTH_BASE_URL || "http://localhost:4000";
 
 export const auth = betterAuth({
   baseURL: auth_base_url,
