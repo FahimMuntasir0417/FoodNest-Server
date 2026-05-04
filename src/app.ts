@@ -1,7 +1,7 @@
-import express, { Application } from "express";
+import express, { Application, type Request } from "express";
 import cors from "cors";
 import { toNodeHandler } from "better-auth/node";
-import { auth } from "./lib/auth";
+import { getAuthEntryForOrigin } from "./lib/auth";
 import { isAllowedOrigin } from "./lib/origins";
 
 import { useRouter } from "./modules/user/user.router";
@@ -17,9 +17,44 @@ import errorHandler from "./middlewares/globalErrorHandler";
 
 const app: Application = express();
 
-app.use(express.json());
-
 app.set("trust proxy", true);
+
+const authHandlers = new Map<string, ReturnType<typeof toNodeHandler>>();
+
+function headerValue(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function getRequestOrigin(req: Request) {
+  const origin = headerValue(req.headers.origin);
+
+  if (origin) {
+    return origin;
+  }
+
+  const forwardedHost = headerValue(req.headers["x-forwarded-host"]);
+  const forwardedProto = headerValue(req.headers["x-forwarded-proto"]);
+
+  if (forwardedHost && forwardedProto) {
+    return `${forwardedProto}://${forwardedHost}`;
+  }
+
+  return headerValue(req.headers.referer);
+}
+
+function getAuthHandler(origin: string | undefined) {
+  const authEntry = getAuthEntryForOrigin(origin);
+  const existingHandler = authHandlers.get(authEntry.origin);
+
+  if (existingHandler) {
+    return existingHandler;
+  }
+
+  const handler = toNodeHandler(authEntry.auth);
+  authHandlers.set(authEntry.origin, handler);
+
+  return handler;
+}
 
 app.use(
   cors({
@@ -36,7 +71,13 @@ app.use(
 );
 
 // Better Auth
-app.all("/api/auth/{*splat}", toNodeHandler(auth));
+app.all("/api/auth/{*splat}", (req, res) => {
+  const handler = getAuthHandler(getRequestOrigin(req));
+
+  return handler(req, res);
+});
+
+app.use(express.json());
 
 // Routes
 app.use("/api/v1/users", useRouter);

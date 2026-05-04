@@ -1,176 +1,123 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { customSession } from "better-auth/plugins"; // ✅ ADD THIS
+import { customSession } from "better-auth/plugins";
 import { prisma } from "./prisma.js";
-import { transporter } from "./mailer.js";
-import { getAllowedOrigins } from "./origins.js";
+import { getAllowedOrigins, normalizeOrigin } from "./origins.js";
 
-const auth_base_url =
-  process.env.BETTER_AUTH_BASE_URL || "http://localhost:4000";
+const defaultAuthBaseUrl =
+  normalizeOrigin(process.env.BETTER_AUTH_BASE_URL) || "http://localhost:4000";
 
-export const auth = betterAuth({
-  baseURL: auth_base_url,
+function createAuth(baseURL: string) {
+  return betterAuth({
+    baseURL,
 
-  // ✅ MUST: frontend origin allowed
-  trustedOrigins: getAllowedOrigins(auth_base_url),
+    trustedOrigins: getAllowedOrigins(defaultAuthBaseUrl),
 
-  database: prismaAdapter(prisma, {
-    provider: "postgresql",
-  }),
-
-  user: {
-    additionalFields: {
-      role: {
-        type: "string",
-        defaultValue: "CUSTOMER",
-        required: false,
-      },
-      phone: {
-        type: "string",
-        required: false,
-      },
-      status: {
-        type: "string",
-        defaultValue: "ACTIVE",
-        required: false,
-      },
-    },
-  },
-
-  // ✅ Email + Password
-  emailAndPassword: {
-    enabled: true,
-    // requireEmailVerification: true,
-  },
-
-  // ✅ Google OAuth
-  socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    },
-  },
-
-  // ✅ Email Verification via Nodemailer
-  // emailVerification: {
-  //   sendVerificationEmail: async ({ user, url }) => {
-  //     await transporter.sendMail({
-  //       from: process.env.EMAIL_FROM!,
-  //       to: user.email,
-  //       subject: "Verify your email",
-  //       html: `
-  //         <h2>Verify your email</h2>
-  //         <p>Click the link below to verify your account:</p>
-  //         <a href="http://localhost:3000/">${url}</a>
-  //       `,
-  //     });
-  //   },
-  // },
-
-  // ✅ ADD THIS: inject providerId into session response
-  plugins: [
-    customSession(async ({ user, session }) => {
-      const provider = await prisma.providerProfile.findUnique({
-        where: { userId: user.id },
-        select: { id: true },
-      });
-
-      return {
-        session,
-        user: {
-          ...user,
-          providerId: provider?.id ?? null, // ✅ now appears in getSession()
-        },
-      };
+    database: prismaAdapter(prisma, {
+      provider: "postgresql",
     }),
-  ],
 
-  advanced: {
-    defaultCookieAttributes: {
-      sameSite: "none",
-      secure: true,
-      httpOnly: true,
-      //extra
-      path: "/",
-    },
-    trustProxy: true,
-    cookies: {
-      state: {
-        attributes: {
-          sameSite: "none",
-          secure: true,
-          // extra
-          path: "/",
+    user: {
+      additionalFields: {
+        role: {
+          type: "string",
+          defaultValue: "CUSTOMER",
+          required: false,
+        },
+        phone: {
+          type: "string",
+          required: false,
+        },
+        status: {
+          type: "string",
+          defaultValue: "ACTIVE",
+          required: false,
         },
       },
     },
-  },
-});
 
-// import { betterAuth } from "better-auth";
-// import { prismaAdapter } from "better-auth/adapters/prisma";
-// import { prisma } from "./prisma";
-// import { transporter } from "./mailer";
+    emailAndPassword: {
+      enabled: true,
+    },
 
-// export const auth = betterAuth({
-//   baseURL: "http://localhost:4000",
+    socialProviders: {
+      google: {
+        clientId: process.env.GOOGLE_CLIENT_ID!,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        prompt: "select_account",
+      },
+    },
 
-//   // ✅ MUST: frontend origin allowed
-//   trustedOrigins: ["http://localhost:3000"],
+    plugins: [
+      customSession(async ({ user, session }) => {
+        const provider = await prisma.providerProfile.findUnique({
+          where: { userId: user.id },
+          select: { id: true },
+        });
 
-//   database: prismaAdapter(prisma, {
-//     provider: "postgresql", // mysql | postgresql | sqlite
-//   }),
+        return {
+          session,
+          user: {
+            ...user,
+            providerId: provider?.id ?? null,
+          },
+        };
+      }),
+    ],
 
-//   user: {
-//     additionalFields: {
-//       role: {
-//         type: "string",
-//         defaultValue: "CUSTOMER",
-//         required: false,
-//       },
-//       phone: {
-//         type: "string",
-//         required: false,
-//       },
-//       status: {
-//         type: "string",
-//         defaultValue: "ACTIVE",
-//         required: false,
-//       },
-//     },
-//   },
+    advanced: {
+      defaultCookieAttributes: {
+        sameSite: "none",
+        secure: true,
+        httpOnly: true,
+        path: "/",
+      },
+      trustedProxyHeaders: true,
+      cookies: {
+        state: {
+          attributes: {
+            sameSite: "none",
+            secure: true,
+            path: "/",
+          },
+        },
+      },
+    },
+  });
+}
 
-//   // ✅ Email + Password
-//   emailAndPassword: {
-//     enabled: true,
+type AuthInstance = ReturnType<typeof createAuth>;
 
-//     // ⚠️ Key name can vary across Better Auth versions
-//     // If TS complains, send: npm ls better-auth
-//     requireEmailVerification: true,
-//   },
+const authByOrigin = new Map<string, AuthInstance>();
 
-//   // ✅ Google OAuth
-//   socialProviders: {
-//     google: {
-//       clientId: process.env.GOOGLE_CLIENT_ID!,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-//     },
-//   },
+function getOrCreateAuth(baseURL: string) {
+  const existingAuth = authByOrigin.get(baseURL);
 
-//   // ✅ Email Verification via Nodemailer
-//   emailVerification: {
-//     sendVerificationEmail: async ({ user, url }) => {
-//       await transporter.sendMail({
-//         from: process.env.EMAIL_FROM!,
-//         to: user.email,
-//         subject: "Verify your email",
-//         html: `
-//           <h2>Verify your email</h2>
-//           <p>Click the link below to verify your account:</p>
-//           <a href="http://localhost:3000/">${url}</a>
-//         `,
-//       });
-//     },
-//   },
-// });
+  if (existingAuth) {
+    return existingAuth;
+  }
+
+  const authInstance = createAuth(baseURL);
+  authByOrigin.set(baseURL, authInstance);
+
+  return authInstance;
+}
+
+for (const origin of getAllowedOrigins(defaultAuthBaseUrl)) {
+  getOrCreateAuth(origin);
+}
+
+export const auth = getOrCreateAuth(defaultAuthBaseUrl);
+
+export function getAuthEntryForOrigin(origin: string | undefined) {
+  const requestedOrigin = normalizeOrigin(origin);
+  const authOrigin =
+    requestedOrigin && authByOrigin.has(requestedOrigin)
+      ? requestedOrigin
+      : defaultAuthBaseUrl;
+
+  return {
+    origin: authOrigin,
+    auth: getOrCreateAuth(authOrigin),
+  };
+}
