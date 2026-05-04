@@ -22,7 +22,7 @@ app.set("trust proxy", true);
 
 app.use(
   cors({
-    origin: process.env.SEED_API_ORIGIN ?? "http://localhost:3000",
+    origin: process.env.SEED_API_ORIGIN || "http://localhost:3000",
     credentials: true,
   }),
 );
