@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth";
+import { isAllowedOrigin } from "./lib/origins";
 
 import { useRouter } from "./modules/user/user.router";
 import { categoriesRouter } from "./modules/categories/categories.routes";
@@ -22,7 +23,14 @@ app.set("trust proxy", true);
 
 app.use(
   cors({
-    origin: process.env.SEED_API_ORIGIN || "http://localhost:3000",
+    origin(origin, callback) {
+      if (!origin || isAllowedOrigin(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    },
     credentials: true,
   }),
 );

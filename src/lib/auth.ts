@@ -3,8 +3,8 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { customSession } from "better-auth/plugins"; // ✅ ADD THIS
 import { prisma } from "./prisma.js";
 import { transporter } from "./mailer.js";
+import { getAllowedOrigins } from "./origins.js";
 
-const origin_url = process.env.SEED_API_ORIGIN || "http://localhost:3000";
 const auth_base_url =
   process.env.BETTER_AUTH_BASE_URL || "http://localhost:4000";
 
@@ -12,11 +12,7 @@ export const auth = betterAuth({
   baseURL: auth_base_url,
 
   // ✅ MUST: frontend origin allowed
-  trustedOrigins: [
-    origin_url,
-    "https://food-nest-client.vercel.app",
-    "http://localhost:4000",
-  ],
+  trustedOrigins: getAllowedOrigins(auth_base_url),
 
   database: prismaAdapter(prisma, {
     provider: "postgresql",
