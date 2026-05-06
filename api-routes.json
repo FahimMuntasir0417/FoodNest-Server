@@ -1,0 +1,459 @@
+[
+  {
+    "module": "Auth",
+    "baseUrl": "/api/auth",
+    "endpoints": [
+      {
+        "name": "Register User",
+        "method": "POST",
+        "url": "/api/auth/sign-up/email",
+        "body": {
+          "name": "FoodHub Customer",
+          "email": "customer@example.com",
+          "password": "StrongPass123",
+          "phone": "+8801712345678",
+          "role": "CUSTOMER"
+        },
+        "notes": "Handled by Better Auth. This project mounts auth at /api/auth, not /api/v1/auth."
+      },
+      {
+        "name": "Login User",
+        "method": "POST",
+        "url": "/api/auth/sign-in/email",
+        "body": {
+          "email": "customer@example.com",
+          "password": "StrongPass123",
+          "rememberMe": true
+        },
+        "notes": "Sets Better Auth session cookies on success."
+      },
+      {
+        "name": "Start Google Login",
+        "method": "POST",
+        "url": "/api/auth/sign-in/social",
+        "body": {
+          "provider": "google",
+          "callbackURL": "/dashboard"
+        },
+        "notes": "Google provider is configured in src/lib/auth.ts."
+      },
+      {
+        "name": "Get Session",
+        "method": "GET",
+        "url": "/api/auth/get-session",
+        "notes": "Requires Better Auth session cookie."
+      },
+      {
+        "name": "Change Password",
+        "method": "POST",
+        "url": "/api/auth/change-password",
+        "body": {
+          "currentPassword": "StrongPass123",
+          "newPassword": "NewStrongPass456",
+          "revokeOtherSessions": true
+        },
+        "notes": "Requires Better Auth session cookie."
+      },
+      {
+        "name": "Logout User",
+        "method": "POST",
+        "url": "/api/auth/sign-out",
+        "notes": "Requires Better Auth session cookie."
+      },
+      {
+        "name": "Better Auth Catch All",
+        "method": "ALL",
+        "url": "/api/auth/{*splat}",
+        "notes": "Mounted in src/app.ts. Better Auth handles all matching auth subroutes."
+      }
+    ]
+  },
+  {
+    "module": "Users",
+    "baseUrl": "/api/v1/users",
+    "endpoints": [
+      {
+        "name": "Get All Users",
+        "method": "GET",
+        "url": "/api/v1/users",
+        "notes": "Requires ADMIN."
+      },
+      {
+        "name": "Get My User",
+        "method": "GET",
+        "url": "/api/v1/users/me",
+        "notes": "Requires logged-in user."
+      },
+      {
+        "name": "Get User By Id",
+        "method": "GET",
+        "url": "/api/v1/users/:id",
+        "notes": "Requires logged-in user."
+      },
+      {
+        "name": "Update User Role",
+        "method": "PATCH",
+        "url": "/api/v1/users/:id",
+        "body": {
+          "role": "PROVIDER"
+        },
+        "notes": "Requires ADMIN. Allowed roles: CUSTOMER, ADMIN, PROVIDER."
+      },
+      {
+        "name": "Delete User",
+        "method": "DELETE",
+        "url": "/api/v1/users/:id",
+        "notes": "Requires ADMIN."
+      }
+    ]
+  },
+  {
+    "module": "Categories",
+    "baseUrl": "/api/v1/categories",
+    "endpoints": [
+      {
+        "name": "Get All Categories",
+        "method": "GET",
+        "url": "/api/v1/categories"
+      },
+      {
+        "name": "Create Category",
+        "method": "POST",
+        "url": "/api/v1/categories",
+        "body": {
+          "name": "Burgers",
+          "slug": "burgers"
+        },
+        "notes": "Requires PROVIDER or ADMIN."
+      },
+      {
+        "name": "Get Category By Id",
+        "method": "GET",
+        "url": "/api/v1/categories/:id"
+      },
+      {
+        "name": "Update Category",
+        "method": "PATCH",
+        "url": "/api/v1/categories/:id",
+        "body": {
+          "name": "Fast Food",
+          "slug": "fast-food"
+        },
+        "notes": "Requires ADMIN."
+      },
+      {
+        "name": "Delete Category",
+        "method": "DELETE",
+        "url": "/api/v1/categories/:id",
+        "notes": "Requires ADMIN."
+      }
+    ]
+  },
+  {
+    "module": "Meals",
+    "baseUrl": "/api/v1/meals",
+    "endpoints": [
+      {
+        "name": "Get All Meals",
+        "method": "GET",
+        "url": "/api/v1/meals",
+        "query": {
+          "providerId": "provider_id_here",
+          "categoryId": "category_id_here",
+          "cuisine": "American",
+          "available": "true",
+          "page": 1,
+          "limit": 10
+        }
+      },
+      {
+        "name": "Get Meal Details",
+        "method": "GET",
+        "url": "/api/v1/meals/:id"
+      },
+      {
+        "name": "Create Meal",
+        "method": "POST",
+        "url": "/api/v1/meals",
+        "body": {
+          "categoryId": "category_id_here",
+          "title": "Chicken Burger",
+          "description": "Grilled chicken burger with fresh salad",
+          "price": 250,
+          "imageUrl": "https://example.com/chicken-burger.jpg",
+          "cuisine": "American",
+          "isAvailable": true
+        },
+        "notes": "Requires PROVIDER or ADMIN. Provider profile is taken from the logged-in user."
+      },
+      {
+        "name": "Update Meal",
+        "method": "PATCH",
+        "url": "/api/v1/meals/:id",
+        "body": {
+          "categoryId": "category_id_here",
+          "title": "Updated Chicken Burger",
+          "description": "Updated meal description",
+          "price": 280,
+          "imageUrl": "https://example.com/updated-burger.jpg",
+          "cuisine": "American",
+          "isAvailable": true
+        },
+        "notes": "Requires PROVIDER or ADMIN. Providers can only update their own meals."
+      },
+      {
+        "name": "Delete Meal",
+        "method": "DELETE",
+        "url": "/api/v1/meals/:id",
+        "notes": "Requires PROVIDER or ADMIN. Providers can only delete their own meals."
+      }
+    ]
+  },
+  {
+    "module": "Reviews",
+    "baseUrl": "/api/v1/reviews",
+    "endpoints": [
+      {
+        "name": "Get All Reviews",
+        "method": "GET",
+        "url": "/api/v1/reviews",
+        "notes": "Requires ADMIN, CUSTOMER, or PROVIDER."
+      },
+      {
+        "name": "Get Reviews By Meal",
+        "method": "GET",
+        "url": "/api/v1/reviews/meal/:mealId",
+        "notes": "Requires ADMIN, CUSTOMER, or PROVIDER."
+      },
+      {
+        "name": "Create Review",
+        "method": "POST",
+        "url": "/api/v1/reviews",
+        "body": {
+          "mealId": "meal_id_here",
+          "rating": 5,
+          "comment": "Very tasty food"
+        },
+        "notes": "Requires CUSTOMER or ADMIN. Rating must be between 1 and 5."
+      },
+      {
+        "name": "Update Review",
+        "method": "PATCH",
+        "url": "/api/v1/reviews/:id",
+        "body": {
+          "rating": 4,
+          "comment": "Updated review comment"
+        },
+        "notes": "Requires CUSTOMER or ADMIN. Customers can only update their own reviews."
+      },
+      {
+        "name": "Delete Review",
+        "method": "DELETE",
+        "url": "/api/v1/reviews/:id",
+        "notes": "Requires CUSTOMER or ADMIN. Customers can only delete their own reviews."
+      }
+    ]
+  },
+  {
+    "module": "Providers",
+    "baseUrl": "/api/v1/providers",
+    "endpoints": [
+      {
+        "name": "Get Provider Orders",
+        "method": "GET",
+        "url": "/api/v1/providers/orders",
+        "notes": "Requires PROVIDER, ADMIN, or CUSTOMER."
+      },
+      {
+        "name": "Update Provider Order Status",
+        "method": "PATCH",
+        "url": "/api/v1/providers/orders/:id",
+        "body": {
+          "status": "PREPARING"
+        },
+        "notes": "Requires PROVIDER. Allowed status: PLACED, PREPARING, READY, DELIVERED, CANCELLED."
+      },
+      {
+        "name": "Get All Providers",
+        "method": "GET",
+        "url": "/api/v1/providers",
+        "notes": "Requires ADMIN, PROVIDER, or CUSTOMER."
+      },
+      {
+        "name": "Get Provider Details",
+        "method": "GET",
+        "url": "/api/v1/providers/:id"
+      },
+      {
+        "name": "Create My Provider Profile",
+        "method": "POST",
+        "url": "/api/v1/providers",
+        "body": {
+          "shopName": "FoodHub Kitchen",
+          "description": "Homemade meals and snacks",
+          "address": "Dhaka, Bangladesh",
+          "phone": "+8801712345678",
+          "logoUrl": "https://example.com/logo.png"
+        },
+        "notes": "Requires PROVIDER, ADMIN, or CUSTOMER. Creates provider profile for the logged-in user."
+      },
+      {
+        "name": "Update My Provider Profile",
+        "method": "PATCH",
+        "url": "/api/v1/providers/me",
+        "body": {
+          "shopName": "Updated FoodHub Kitchen",
+          "description": "Updated shop description",
+          "address": "Banani, Dhaka",
+          "phone": "+8801812345678",
+          "logoUrl": "https://example.com/updated-logo.png"
+        },
+        "notes": "Requires PROVIDER, CUSTOMER, or ADMIN."
+      }
+    ]
+  },
+  {
+    "module": "Order Items",
+    "baseUrl": "/api/v1/order-items",
+    "endpoints": [
+      {
+        "name": "Get My Draft Items",
+        "method": "GET",
+        "url": "/api/v1/order-items",
+        "notes": "Requires CUSTOMER or ADMIN."
+      },
+      {
+        "name": "Get Items By Order",
+        "method": "GET",
+        "url": "/api/v1/order-items/order/:orderId",
+        "notes": "Requires CUSTOMER, ADMIN, or PROVIDER."
+      },
+      {
+        "name": "Get Order Item By Id",
+        "method": "GET",
+        "url": "/api/v1/order-items/:id",
+        "notes": "Requires CUSTOMER, ADMIN, or PROVIDER."
+      },
+      {
+        "name": "Create Draft Order Item",
+        "method": "POST",
+        "url": "/api/v1/order-items",
+        "body": {
+          "mealId": "meal_id_here",
+          "quantity": 2
+        },
+        "notes": "Requires CUSTOMER or ADMIN."
+      },
+      {
+        "name": "Update Order Item Quantity",
+        "method": "PATCH",
+        "url": "/api/v1/order-items/:id",
+        "body": {
+          "quantity": 3
+        },
+        "notes": "Requires CUSTOMER or ADMIN."
+      },
+      {
+        "name": "Delete Order Item",
+        "method": "DELETE",
+        "url": "/api/v1/order-items/:id",
+        "notes": "Requires CUSTOMER or ADMIN."
+      }
+    ]
+  },
+  {
+    "module": "Orders",
+    "baseUrl": "/api/v1/orders",
+    "endpoints": [
+      {
+        "name": "Get All Orders",
+        "method": "GET",
+        "url": "/api/v1/orders",
+        "notes": "Requires ADMIN."
+      },
+      {
+        "name": "Create Order With Items",
+        "method": "POST",
+        "url": "/api/v1/orders",
+        "body": {
+          "deliveryAddress": "Dhaka, Bangladesh",
+          "phone": "+8801712345678",
+          "note": "Please deliver quickly",
+          "deliveryFee": 60,
+          "itemIds": [
+            "order_item_id_here"
+          ]
+        },
+        "notes": "Requires CUSTOMER or ADMIN. itemIds must be draft order item ids."
+      },
+      {
+        "name": "Create Order From Drafts",
+        "method": "POST",
+        "url": "/api/v1/orders/from-drafts",
+        "body": {
+          "deliveryAddress": "Dhaka, Bangladesh",
+          "phone": "+8801712345678",
+          "note": "Use my cart items",
+          "deliveryFee": 60
+        },
+        "notes": "Requires logged-in user."
+      },
+      {
+        "name": "Get My Orders",
+        "method": "GET",
+        "url": "/api/v1/orders/me",
+        "notes": "Requires CUSTOMER, ADMIN, or PROVIDER."
+      },
+      {
+        "name": "Get Order By Id",
+        "method": "GET",
+        "url": "/api/v1/orders/:id",
+        "notes": "Requires CUSTOMER, ADMIN, or PROVIDER."
+      },
+      {
+        "name": "Update Order",
+        "method": "PATCH",
+        "url": "/api/v1/orders/:id",
+        "body": {
+          "deliveryAddress": "Updated address, Dhaka",
+          "phone": "+8801812345678",
+          "note": "Updated delivery note"
+        },
+        "notes": "Requires CUSTOMER or ADMIN."
+      },
+      {
+        "name": "Update Order Status",
+        "method": "PATCH",
+        "url": "/api/v1/orders/:id/status",
+        "body": {
+          "status": "READY"
+        },
+        "notes": "Requires ADMIN or PROVIDER. Allowed status: PLACED, PREPARING, READY, DELIVERED, CANCELLED."
+      },
+      {
+        "name": "Cancel Order",
+        "method": "PATCH",
+        "url": "/api/v1/orders/:id/cancel",
+        "notes": "Requires CUSTOMER or ADMIN."
+      },
+      {
+        "name": "Delete Order",
+        "method": "DELETE",
+        "url": "/api/v1/orders/:id",
+        "notes": "Requires ADMIN."
+      }
+    ]
+  },
+  {
+    "module": "Root",
+    "baseUrl": "/",
+    "endpoints": [
+      {
+        "name": "Health Check",
+        "method": "GET",
+        "url": "/",
+        "notes": "Returns Hello World."
+      }
+    ]
+  }
+]
