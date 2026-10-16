@@ -5,10 +5,10 @@
   "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node api.js && npx tsx watch src/index.ts",
+    "dev": "npx tsx watch src/index.ts",
     "seed:admin": "npx tsx src/scripts/seedAdmin.ts",
     "build": "prisma generate && tsup",
-    "start": "node api.js && pnpm prisma migrate deploy && node dist/index.js",
+    "start": "pnpm prisma migrate deploy && node dist/index.js",
     "postinstall": "prisma generate"
   },
   "keywords": [],
